@@ -1,0 +1,15 @@
+.bg-mi-color {
+    background-color: #161439; /* Color personalizado */
+}
+.text-descriptivo {
+    font-family: "Open Sans", serif;
+    color: #FFD9AE; /* Texto blanco para contraste */
+}
+
+.img-sin-fondo{
+    background-color: transparent;
+}
+
+.bg-input{
+    background-color: #FFECEC;
+}
