@@ -36,9 +36,9 @@ const Conctactos = () => {
     }
 
     return (
-        <main className="container mt-5 ">
-            <section>
-                <form onSubmit={onHandleSubmit}>
+        <main className="bg-mi-color flex-grow-1 bg-light p-3" >
+            <section className="container mt-5 ">
+                <form onSubmit={onHandleSubmit} c>
                     <legend className="mb-4">¡Contáctanos!</legend>
                     <fieldset>
                         <label htmlFor="name" className="form-label ">Su nombre</label>
