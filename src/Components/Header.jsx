@@ -4,8 +4,7 @@ import {NavLink} from "react-router-dom";
 const Header = () => {
     return (
         <header>
-            <nav className="navbar navbar-expand-lg bg-mi-color text-descriptivo w-100">
-                <div className="container-fluid">
+            <nav className="navbar navbar-expand-lg bg-mi-color text-descriptivo w-100 container-fluid ">
                     <a className="navbar-brand" href="/">
                         <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"} style={{height: "100px"}}/>
                     </a>
@@ -23,7 +22,6 @@ const Header = () => {
                             <NavLink className="nav-link text-white" to="/contact_me">Contactar</NavLink>
                         </li>
                     </ul>
-                </div>
             </nav>
         </header>
     );
