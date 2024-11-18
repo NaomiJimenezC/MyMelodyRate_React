@@ -11,7 +11,7 @@ const Contactos = () => {
         if (nombre.length > 0) {
             setName(nombre);
         } else {
-            console.log("Por favor, ingrese un nombre.");
+            console.log("Por favor, ingrese un nombre."); //TODO(cambiar por una función que lo pinte)
         }
     };
 
@@ -21,7 +21,7 @@ const Contactos = () => {
         if (emailRegex.test(correo)) {
             setEmail(correo);
         } else {
-            console.log("Por favor, ingrese un email válido.");
+            console.log("Por favor, ingrese un email válido.");//TODO(cambiar por una función que lo pinte)
         }
     };
 
@@ -30,7 +30,7 @@ const Contactos = () => {
         if (mensaje.length > 0) {
             setMessage(mensaje);
         } else {
-            console.log("Por favor, ingrese un mensaje.");
+            console.log("Por favor, ingrese un mensaje.");//TODO(cambiar por una función que lo pinte)
         }
     };
 
