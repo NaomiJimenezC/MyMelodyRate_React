@@ -1,44 +1,54 @@
 import React from 'react';
 
-const Conctactos = () => {
+const Contactos = () => {
     const [name, setName] = React.useState('');
     const [email, setEmail] = React.useState('');
     const [message, setMessage] = React.useState('');
-    const [valid, setValid] = React.useState(false);
 
-    const handleNameChange = (e) => {
+
+    const handleNameBlur = (e) => {
         const nombre = e.target.value;
-        setName(nombre);
-        nombre ? setValid(nombre && email && message) : console.log("ingrese algo")
-    }
+        if (nombre.length > 0) {
+            setName(nombre);
+        } else {
+            console.log("Por favor, ingrese un nombre.");
+        }
+    };
 
-    const handleEmailChange = (e) => {
-        const email = e.target.value;
-        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
+    const handleEmailBlur = (e) => {
+        const correo = e.target.value;
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (emailRegex.test(correo)) {
+            setEmail(correo);
+        } else {
+            console.log("Por favor, ingrese un email válido.");
+        }
+    };
 
-        setEmail(email)
-        emailRegex.test(email) ? setValid(name && emailRegex.test(email) && message) : console.log("ingrese un email válido")
-    }
-
-    const handleMessageChange = (e) => {
+    const handleMessageBlur = (e) => {
         const mensaje = e.target.value;
-        setMessage(mensaje);
-        mensaje ? setValid(name && email && message) : console.log("ingrese un mensaje")
-    }
+        if (mensaje.length > 0) {
+            setMessage(mensaje);
+        } else {
+            console.log("Por favor, ingrese un mensaje.");
+        }
+    };
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-        if (valid) {
-            console.log("enviando email")
+
+        if (name && email && message) {
+            console.log("Enviando email...");
         } else {
-            console.log("mal")
+            console.log("Por favor, complete todos los campos.");
         }
-    }
+    };
+
 
     return (
         <main className="bg-mi-color flex-grow-1 bg-light p-3" >
             <section className="container mt-5 ">
-                <form onSubmit={onHandleSubmit} c>
+                <form onSubmit={onHandleSubmit} >
                     <legend className="mb-4">¡Contáctanos!</legend>
                     <fieldset>
                         <label htmlFor="name" className="form-label ">Su nombre</label>
@@ -47,8 +57,8 @@ const Conctactos = () => {
                                id="name"
                                name="name"
                                placeholder="Introduzca su nombre"
-                               onChange={handleNameChange}
-                               value={name}
+                               onBlur={handleNameBlur}
+                               defaultValue={name}
                         />
 
                         <label htmlFor="email" className="form-label">Email</label>
@@ -57,8 +67,7 @@ const Conctactos = () => {
                                id="email"
                                name="email"
                                placeholder="Introduzca su email"
-                               onChange={handleEmailChange}
-                               value={email}
+                               onBlur={handleEmailBlur}
                         />
 
                         <label htmlFor="contenidoDelMensaje" className="form-label">Contenido del mensaje</label>
@@ -67,8 +76,8 @@ const Conctactos = () => {
                             id="contenidoDelMensaje"
                             rows="4"
                             placeholder="Escribe tu mensaje aquí"
-                            onChange={handleMessageChange}
-                            value={message}
+                            defaultValue={message}
+                            onBlur={handleMessageBlur}
                         >
                         </textarea>
 
@@ -80,4 +89,4 @@ const Conctactos = () => {
     );
 };
 
-export default Conctactos;
+export default Contactos;

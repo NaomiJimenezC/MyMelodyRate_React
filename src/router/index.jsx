@@ -10,7 +10,7 @@ import Perfil from "../pages/Perfil.jsx";
 import Lista from "../pages/Lista.jsx";
 import InicioDeSesion from "../pages/InicioDeSesion.jsx";
 import Registro from "../pages/Registro.jsx";
-import Conctactos from "../pages/Conctactos.jsx";
+import Contactos from "../pages/Contactos.jsx";
 
 
 export const router = createBrowserRouter([
@@ -58,7 +58,7 @@ export const router = createBrowserRouter([
                     },
                     {
                         path: "/contact_me",
-                        element:<Conctactos />
+                        element:<Contactos />
                     }
                 ]
             }
