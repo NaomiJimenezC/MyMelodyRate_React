@@ -16,10 +16,10 @@ const Header = () => {
                     />
                     <ul className="navbar-nav ms-auto">
                         <li className="nav-item">
-                            <NavLink className="nav-link text-white" to="/about">About</NavLink>
+                            <NavLink className="nav-link text-white" to="/sign_up">Registro</NavLink>
                         </li>
                         <li className="nav-item">
-                            <NavLink className="nav-link text-white" to="/contact_me">Contactar</NavLink>
+                            <NavLink className="nav-link text-white" to="/sign_in">Inicio de sesión</NavLink>
                         </li>
                     </ul>
             </nav>
