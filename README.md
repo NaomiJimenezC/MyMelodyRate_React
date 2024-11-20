@@ -95,3 +95,30 @@ const [name, setName] = React.useState('');
 const [email, setEmail] = React.useState('');
 const [message, setMessage] = React.useState('');
 ```
+
+Para validarlos:
+* En caso del nombre y el mensaje (solo se muestra el de nombre porque el de mensaje es igual) solamente valido que el mensaje
+no sea un mensaje vacío
+* En caso del email hago uso de un Regex que valida que el formato del email sea el adecuado
+Como se puede ver, si ambos pasan el requisito cambian el valor de los estados
+
+```jsx
+const handleNameBlur = (e) => {
+        const nombre = e.target.value;
+        if (nombre.trim().length > 0) {
+            setName(nombre);
+        } else {
+            console.log("Por favor, ingrese un nombre."); //TODO(cambiar por una función que lo pinte)
+        }
+    };
+
+const handleEmailBlur = (e) => {
+        const correo = e.target.value;
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (emailRegex.test(correo)) {
+            setEmail(correo);
+        } else {
+            console.log("Por favor, ingrese un email válido.");//TODO(cambiar por una función que lo pinte)
+        }
+    };
+```
