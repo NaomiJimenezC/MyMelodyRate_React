@@ -5,10 +5,9 @@ const Contactos = () => {
     const [email, setEmail] = React.useState('');
     const [message, setMessage] = React.useState('');
 
-
     const handleNameBlur = (e) => {
         const nombre = e.target.value;
-        if (nombre.length > 0) {
+        if (nombre.trim().length > 0) {
             setName(nombre);
         } else {
             console.log("Por favor, ingrese un nombre."); //TODO(cambiar por una función que lo pinte)
@@ -27,7 +26,7 @@ const Contactos = () => {
 
     const handleMessageBlur = (e) => {
         const mensaje = e.target.value;
-        if (mensaje.length > 0) {
+        if (mensaje.trim().length > 0) {
             setMessage(mensaje);
         } else {
             console.log("Por favor, ingrese un mensaje.");//TODO(cambiar por una función que lo pinte)
@@ -36,7 +35,6 @@ const Contactos = () => {
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
-
         if (name && email && message) {
             console.log("Enviando email...");
         } else {

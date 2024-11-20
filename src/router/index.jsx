@@ -22,7 +22,6 @@ export const router = createBrowserRouter([
             {
                 children:[
                     {
-                        // path: "/",
                         index:true,
                         element: <Home />,
                     },
@@ -33,12 +32,10 @@ export const router = createBrowserRouter([
                     {
                         path: "/album",
                         element: <Album />,
-                        //loader: loaderBlogs // hace que carguen los datos del fetch antes de montar el componente
                     },
                     {
                         path: "/track",
                         element: <Cancion />,
-                        //loader: loaderPosts
                     },
                     {
                         path: "/user",

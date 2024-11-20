@@ -7,7 +7,8 @@ const Registro = () => {
     const [password, setPassword] = React.useState('');
     const [confirmPassword, setConfirmPassword] = React.useState('');
     const [check, setCheck] = React.useState(false);
-
+    const [valid, setValid] = React.useState(false);
+    const [error, setError] = React.useState(false);
 
     const onHandleBlurName = (e) => {
         const value = e.target.value;
@@ -16,6 +17,7 @@ const Registro = () => {
         } else {
             setNombre(value);
         }
+        checkValidity()
     }
 
     const handleEmailBlur = (e) => {
@@ -26,6 +28,7 @@ const Registro = () => {
         } else {
             console.log("Por favor, ingrese un email válido.");//TODO(cambiar por una función que lo pinte)
         }
+        checkValidity()
     };
 
     const handleDateBlur = (e) => {
@@ -35,6 +38,7 @@ const Registro = () => {
         } else {
             console.log("Por favor, ingrese una fecha válida");
         }
+        console.log(date);
     }
 
     const handlePasswordBlur = (e) => {
@@ -46,18 +50,16 @@ const Registro = () => {
         } else {
             console.log("Por favor, ingrese una contraseña de 8 caracteres, con una minúscula, una mayúscula y un número minimo");
         }
+        checkValidity()
     }
 
     const handleConfirmPasswordBlur = (e) => {
         const confirmPassword = e.target.value;
-        if (password !== confirmPassword) {
-            console.log("Ingrese la contraseña que ingresaste antes");
-        } else  {
-            setConfirmPassword(confirmPassword);
-        }
+
+        password !== confirmPassword ?
+            console.log("Ingrese la contraseña que ingresaste antes") : setConfirmPassword(confirmPassword);
+        checkValidity()
     }
-
-
 
     const onHandleSubmit = (e) => {
         e.preventDefault();
@@ -68,60 +70,100 @@ const Registro = () => {
         }
     }
 
+    const onHandleCheckClick = (e) => {
+        const valorCheck = e.currentTarget.checked;
+        if (valorCheck) {
+            setCheck(valorCheck);
+        } else {
+            setCheck(valorCheck);
+        }
+        checkValidity()
+    }
+
+    const checkValidity = () => {
+        if (check && nombre && email && date && password && confirmPassword) {
+            setValid(true);
+        }
+    }
+
     return (
         <>
-            <section>
-                <form onSubmit={onHandleSubmit}>
-                    <label>Nombre</label>
-                    <input
-                        id={"nombre"}
-                        name="nombre"
-                        type="text"
-                        onBlur={onHandleBlurName}
-                    />
+            <main>
+                <form className={"form-registro"} onSubmit={onHandleSubmit}>
+                    <fieldset className={"form-registro"}>
+                        <label className={"campo-label"}>Nombre</label>
+                        <input
+                            className={"campo-input"}
+                            id={"nombre"}
+                            name="nombre"
+                            type="text"
+                            onBlur={onHandleBlurName}
+                        />
+                    </fieldset>
 
-                    <label>Email</label>
-                    <input
-                        id={'email'}
-                        name={"email"}
-                        type="text"
-                    />
+                    <fieldset className={"form-campo"}>
+                        <label className={"campo-label"}>Email</label>
+                        <input
+                            className={"campo-input"}
+                            id={'email'}
+                            name={"email"}
+                            type="text"
+                            onBlur={handleEmailBlur}
+                        />
+                    </fieldset>
 
-                    <label>Fecha de nacimiento</label>
-                    <input
-                        type={"date"}
-                        name={"bdDate"}
-                        id="bdDate"
-                        onBlur={handleDateBlur}
-                    />
+                    <fieldset className={"form-campo"}>
+                        <label className={"campo-label"}>Fecha de nacimiento</label>
+                        <input
+                            className={"campo-input"}
+                            type={"date"}
+                            name={"bdDate"}
+                            id="bdDate"
+                            onBlur={handleDateBlur}
+                        />
+                    </fieldset>
 
-                    <label>Contraseña</label>
+                    <fieldset className={"form-campo"}>
+                        <label className={"campo-label"}>Contraseña</label>
+                        <input
+                            className={"campo-input"}
+                            id={"password"}
+                            name={"password"}
+                            type="password"
+                            onBlur={handlePasswordBlur}
+                        />
+                    </fieldset>
 
-                    <input
-                        id={"password"}
-                        name={"password"}
-                        type="password"
-                        onBlur={handlePasswordBlur}
-                    />
-                    <label>Confirmar contraseña</label>
-                    <input
-                        id={"password_confirmation"}
-                        name={"password_confirmation"}
-                        type="password"
-                        onBlur={handleConfirmPasswordBlur}
-                    />
+                    <fieldset className={"form-campo"}>
+                        <label className={"campo-label"}>Confirmar contraseña</label>
+                        <input
+                            className={"campo-input"}
+                            id={"password_confirmation"}
+                            name={"password_confirmation"}
+                            type="password"
+                            onBlur={handleConfirmPasswordBlur}
+                        />
+                    </fieldset>
 
-                    <label>Aceptar términos y condiciones</label>
-                    <input
-                        type={"checkbox"}
-                        name={"agreement"}
-                        id="agreement"
-                        onClick={()=> setCheck(true)}
-                    />
+                    <fieldset className={"form-campo"}>
+                        <label className={"campo-label"}>Aceptar términos y condiciones</label>
+                        <input
+                            className={"campo-input"}
+                            type={"checkbox"}
+                            name={"agreement"}
+                            id="agreement"
+                            onClick={onHandleCheckClick}
+                        />
+                    </fieldset>
 
-                    <button>Registrarse</button>
+                    <button
+                        type="submit"
+                        className={valid ? "form-button-enable": "form-button-disable"}
+                        disabled={!valid}
+                    >Registrarse
+                    </button>
                 </form>
-            </section>
+            </main>
 
         </>
     );
