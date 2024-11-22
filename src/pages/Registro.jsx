@@ -1,5 +1,5 @@
 import React from 'react';
-import {login} from "../config/Firebase.jsx";
+import {login, register} from "../config/Firebase.jsx";
 
 const Registro = () => {
     const [nombre, setNombre] = React.useState('');
@@ -66,7 +66,7 @@ const Registro = () => {
         e.preventDefault();
         if (valid){
             try {
-                await login({email, password});
+                await register({email, password});
                 console.log('login successful');
             } catch (error) {
                 console.log(error.code);
