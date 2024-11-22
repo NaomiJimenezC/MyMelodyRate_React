@@ -1,4 +1,5 @@
 import React from 'react';
+import {login} from "../config/Firebase.jsx";
 
 const Registro = () => {
     const [nombre, setNombre] = React.useState('');
@@ -61,13 +62,20 @@ const Registro = () => {
         checkValidity()
     }
 
-    const onHandleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (check && nombre && email && date && password && confirmPassword) {
-            console.log("enviando");
+        if (valid){
+            try {
+                await login({email, password});
+                console.log('login successful');
+            } catch (error) {
+                console.log(error.code);
+                console.log(error.message);
+            }
         } else {
-            console.log("Rellene correctamente todos los campos")
+            console.log("completa los datos del formulario")
         }
+
     }
 
     const onHandleCheckClick = (e) => {
@@ -89,7 +97,7 @@ const Registro = () => {
     return (
         <>
             <main>
-                <form className={"form-registro"} onSubmit={onHandleSubmit}>
+                <form className={"form-registro"} onSubmit={handleSubmit}>
                     <fieldset className={"form-registro"}>
                         <label className={"campo-label"}>Nombre</label>
                         <input
