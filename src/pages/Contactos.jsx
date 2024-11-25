@@ -1,4 +1,6 @@
 import React from 'react';
+import {Formik} from "formik";
+import * as Yup from "prop-types";
 
 const Contactos = () => {
     const [name, setName] = React.useState('');
@@ -42,11 +44,59 @@ const Contactos = () => {
         }
     };
 
+    const validationSchema = Yup.object().shape({
+        email: Yup.string().trim().email("Email no válido").match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).required("El email es requerido"),
+        name: Yup.string().trim().min(3, "Mínimo 3 caracteres").required("El nombre es requerido"),
+        message: Yup.string().trim().min(3,"Mínimo 3 caracteres").required("Se requiere algo de contenido"),
+    });
 
     return (
-        <main className="bg-mi-color flex-grow-1 bg-light p-3" >
+        <section>
+            <Formik initialValues={{name:""}} onSubmit={} validationSchema={validationSchema}>
+                <form onSubmit={onHandleSubmit}>
+                    <legend className="mb-4">¡Contáctanos!</legend>
+                    <fieldset>
+                        <label htmlFor="name" className="form-label ">Su nombre</label>
+                        <input type="text"
+                               className="form-control mb-3 bg-input text-descriptivo"
+                               id="name"
+                               name="name"
+                               placeholder="Introduzca su nombre"
+                               onBlur={handleNameBlur}
+                               defaultValue={name}
+                        />
+
+                        <label htmlFor="email" className="form-label">Email</label>
+                        <input type="text"
+                               className="form-control mb-3 bg-input text-descriptivo"
+                               id="email"
+                               name="email"
+                               placeholder="Introduzca su email"
+                               onBlur={handleEmailBlur}
+                        />
+
+                        <label htmlFor="contenidoDelMensaje" className="form-label">Contenido del mensaje</label>
+                        <textarea
+                            className="form-control mb-3 bg-input text-descriptivo"
+                            id="contenidoDelMensaje"
+                            rows="4"
+                            placeholder="Escribe tu mensaje aquí"
+                            defaultValue={message}
+                            onBlur={handleMessageBlur}
+                        >
+                        </textarea>
+
+                        <button type="submit" className="btn btn-primary">Enviar</button>
+                    </fieldset>
+                </form>
+            </Formik>
+        </section>
+    )
+
+    return (
+        <main className="bg-mi-color flex-grow-1 bg-light p-3">
             <section className="container mt-5 ">
-                <form onSubmit={onHandleSubmit} >
+                <form onSubmit={onHandleSubmit}>
                     <legend className="mb-4">¡Contáctanos!</legend>
                     <fieldset>
                         <label htmlFor="name" className="form-label ">Su nombre</label>
