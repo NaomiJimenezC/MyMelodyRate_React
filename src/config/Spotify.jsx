@@ -39,7 +39,6 @@ export const hacerSolicitud = async (urlPeticion) => {
         const response = await axios.get(urlPeticion, {
             headers: { Authorization: `Bearer ${accessToken}` }
         });
-        console.log('Respuesta de la API:', response.data);
         return response.data; // Devuelve los datos de la API
     } catch (error) {
         console.error('Error al hacer la solicitud:', error.response?.data || error.message);
