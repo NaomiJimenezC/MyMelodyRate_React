@@ -3,6 +3,7 @@ import Card from "../Components/Card.jsx";
 import CardArtist from "../Components/CardArtist.jsx";
 
 import { useState, useEffect } from 'react';
+import {hacerSolicitud} from "../config/Spotify.jsx";
 
 const Home = () => {
     const [artists, setArtists] = useState([]);
@@ -18,8 +19,8 @@ const Home = () => {
                 setError('Error al cargar los artistas');
             }
         };
-
         fetchArtists();
+        console.log(pruebaAPISPotify);
     }, []);
 
     return (
@@ -53,6 +54,10 @@ const Home = () => {
 };
 
 export default Home;
+
+
+
+const pruebaAPISPotify = hacerSolicitud("https://api.spotify.com/v1/browse/new-releases");
 
 
 export const getTopTracks = () => {

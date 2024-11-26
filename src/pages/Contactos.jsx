@@ -1,140 +1,111 @@
 import React from 'react';
-import {Formik} from "formik";
-import * as Yup from "prop-types";
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+
 
 const Contactos = () => {
-    const [name, setName] = React.useState('');
-    const [email, setEmail] = React.useState('');
-    const [message, setMessage] = React.useState('');
-
-    const handleNameBlur = (e) => {
-        const nombre = e.target.value;
-        if (nombre.trim().length > 0) {
-            setName(nombre);
-        } else {
-            console.log("Por favor, ingrese un nombre."); //TODO(cambiar por una función que lo pinte)
-        }
-    };
-
-    const handleEmailBlur = (e) => {
-        const correo = e.target.value;
-        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if (emailRegex.test(correo)) {
-            setEmail(correo);
-        } else {
-            console.log("Por favor, ingrese un email válido.");//TODO(cambiar por una función que lo pinte)
-        }
-    };
-
-    const handleMessageBlur = (e) => {
-        const mensaje = e.target.value;
-        if (mensaje.trim().length > 0) {
-            setMessage(mensaje);
-        } else {
-            console.log("Por favor, ingrese un mensaje.");//TODO(cambiar por una función que lo pinte)
-        }
-    };
-
-    const onHandleSubmit = (e) => {
-        e.preventDefault();
-        if (name && email && message) {
-            console.log("Enviando email...");
-        } else {
-            console.log("Por favor, complete todos los campos.");
+    const onSubmit = ({ name,email, message }, { setSubmitting, setErrors, resetForm }) => {
+        try {
+            console.log(name,email,message);
+            resetForm();
+        } catch (error) {
+            if (error.code === "auth/invalid-credential") {
+                setErrors({ credentials: "Credenciales inválidas" });
+            } else {
+                console.error(error.code, error.message);
+            }
+        } finally {
+            setSubmitting(false);
         }
     };
 
     const validationSchema = Yup.object().shape({
-        email: Yup.string().trim().email("Email no válido").match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/).required("El email es requerido"),
+        email: Yup.string().trim().email("Email no válido").matches( /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/,"Formato no válido").required("El email es requerido"),
         name: Yup.string().trim().min(3, "Mínimo 3 caracteres").required("El nombre es requerido"),
-        message: Yup.string().trim().min(3,"Mínimo 3 caracteres").required("Se requiere algo de contenido"),
+        message: Yup.string().trim().min(3, "Mínimo 3 caracteres").required("Se requiere algo de contenido"),
     });
 
     return (
         <section>
-            <Formik initialValues={{name:""}} onSubmit={} validationSchema={validationSchema}>
-                <form onSubmit={onHandleSubmit}>
-                    <legend className="mb-4">¡Contáctanos!</legend>
-                    <fieldset>
-                        <label htmlFor="name" className="form-label ">Su nombre</label>
-                        <input type="text"
-                               className="form-control mb-3 bg-input text-descriptivo"
-                               id="name"
-                               name="name"
-                               placeholder="Introduzca su nombre"
-                               onBlur={handleNameBlur}
-                               defaultValue={name}
-                        />
+            <Formik
+                initialValues={{name: "", email: "", message: ""}}
+                onSubmit={onSubmit}
+                validationSchema={validationSchema}>
+                {
+                    ({
+                         values,
+                         handleChange,
+                         handleSubmit,
+                         handleBlur,
+                         touched,
+                         errors,
+                         isSubmitting
+                     })  => (
+                        <form onSubmit={handleSubmit}>
+                            <legend className="mb-4">¡Contáctanos!</legend>
+                            <fieldset>
+                                <label htmlFor="name" className="form-label ">Su nombre</label>
+                                <input type="text"
+                                       className="form-control mb-3 bg-input text-descriptivo"
+                                       id="name"
+                                       name="name"
+                                       placeholder="Introduzca su nombre"
+                                       value={values.name}
+                                       onChange={handleChange}
+                                       onBlur={handleBlur}
+                                />
+                                {errors.name && touched.name && (
+                                    <div style={{ color: 'red', fontSize: '0.8rem' }}>
+                                        {errors.name}
+                                    </div>
+                                )}
 
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input type="text"
-                               className="form-control mb-3 bg-input text-descriptivo"
-                               id="email"
-                               name="email"
-                               placeholder="Introduzca su email"
-                               onBlur={handleEmailBlur}
-                        />
+                                <label htmlFor="email" className="form-label">Email</label>
+                                <input
+                                    className="form-control mb-3 bg-input text-descriptivo"
+                                    id="email"
+                                    type="text"
+                                    placeholder="Email"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    name="email"
+                                />
+                                {errors.email && touched.email && (
+                                    <div style={{ color: 'red', fontSize: '0.8rem' }}>
+                                        {errors.email}
+                                    </div>
+                                )}
 
-                        <label htmlFor="contenidoDelMensaje" className="form-label">Contenido del mensaje</label>
-                        <textarea
-                            className="form-control mb-3 bg-input text-descriptivo"
-                            id="contenidoDelMensaje"
-                            rows="4"
-                            placeholder="Escribe tu mensaje aquí"
-                            defaultValue={message}
-                            onBlur={handleMessageBlur}
-                        >
-                        </textarea>
+                                <label htmlFor="message" className="form-label">Contenido del
+                                    mensaje</label>
+                                <textarea
+                                    className="form-control mb-3 bg-input text-descriptivo"
+                                    id="message"
+                                    name="message"
+                                    rows="4"
+                                    placeholder="Escribe tu mensaje aquí"
+                                    value={values.message}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                 >
+                                </textarea>
 
-                        <button type="submit" className="btn btn-primary">Enviar</button>
-                    </fieldset>
-                </form>
+                                {errors.message && touched.message && (
+                                    <div style={{ color: 'red', fontSize: '0.8rem' }}>
+                                        {errors.message}
+                                    </div>
+                                )}
+
+                                <button type="submit" disabled={isSubmitting}>Enviar</button>
+                            </fieldset>
+                        </form>
+                    )
+                }
             </Formik>
         </section>
     )
-
-    return (
-        <main className="bg-mi-color flex-grow-1 bg-light p-3">
-            <section className="container mt-5 ">
-                <form onSubmit={onHandleSubmit}>
-                    <legend className="mb-4">¡Contáctanos!</legend>
-                    <fieldset>
-                        <label htmlFor="name" className="form-label ">Su nombre</label>
-                        <input type="text"
-                               className="form-control mb-3 bg-input text-descriptivo"
-                               id="name"
-                               name="name"
-                               placeholder="Introduzca su nombre"
-                               onBlur={handleNameBlur}
-                               defaultValue={name}
-                        />
-
-                        <label htmlFor="email" className="form-label">Email</label>
-                        <input type="text"
-                               className="form-control mb-3 bg-input text-descriptivo"
-                               id="email"
-                               name="email"
-                               placeholder="Introduzca su email"
-                               onBlur={handleEmailBlur}
-                        />
-
-                        <label htmlFor="contenidoDelMensaje" className="form-label">Contenido del mensaje</label>
-                        <textarea
-                            className="form-control mb-3 bg-input text-descriptivo"
-                            id="contenidoDelMensaje"
-                            rows="4"
-                            placeholder="Escribe tu mensaje aquí"
-                            defaultValue={message}
-                            onBlur={handleMessageBlur}
-                        >
-                        </textarea>
-
-                        <button type="submit" className="btn btn-primary">Enviar</button>
-                    </fieldset>
-                </form>
-            </section>
-        </main>
-    );
 };
+
 
 export default Contactos;
