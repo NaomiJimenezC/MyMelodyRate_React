@@ -6,7 +6,7 @@ const Header = () => {
         <header>
             <nav className="navbar navbar-expand-lg bg-mi-color text-descriptivo w-100 container-fluid ">
                     <a className="navbar-brand" href="/">
-                        <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"} style={{height: "100px"}}/>
+                        <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"} />
                     </a>
                     <input
                         className="form-control me-2 bg-input"
