@@ -17,6 +17,7 @@ const Registro = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
+        console.log(user)
         user && navigate('/user');
     },[user])
 

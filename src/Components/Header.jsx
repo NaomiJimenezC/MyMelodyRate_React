@@ -15,7 +15,8 @@ const Header = () => {
         <header>
             <nav className="navbar navbar-expand-lg bg-mi-color text-descriptivo w-100 container-fluid ">
                     <a className="navbar-brand" href="/">
-                        <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"} />
+                        <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"}
+                        style={{width:'200px'}} />
                     </a>
                     <select></select>
                     <input

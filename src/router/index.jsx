@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
                                 element: <Perfil />,
                             },
                             {
-                                path: "/list",
+                                path: "list",
                                 element: <Lista />,
                             },
                         ]

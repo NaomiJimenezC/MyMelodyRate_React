@@ -1,6 +1,6 @@
 import { useContext} from "react";
 import {Outlet, useNavigate } from "react-router-dom";
-import { UserContext } from "../context/UserContext";
+import { UserContext } from "../Context/UserProvider.jsx";
 
 const LayoutPrivate = () => {
     const {user} = useContext(UserContext)

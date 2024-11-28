@@ -73,7 +73,7 @@ const InicioDeSesion = () => {
 
             <article>
                 <h2>¿No tienes cuenta? ¡Únete a nosotros!</h2>
-                <button onClick={()=> navigate("/register")}>¡Únete!</button>
+                <button onClick={()=> navigate("/sign_up")}>¡Únete!</button>
             </article>
         </section>
     );
