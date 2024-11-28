@@ -3,6 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import LayaoutPublic from "../Layaout/LayaoutPublic.jsx";
 import Home from "../pages/Home.jsx";
 import LayaoutPrivate from "../Layaout/LayaoutPrivate.jsx";
+import ResultadosBusqueda from "../pages/ResultadosBusqueda.jsx";
 import("../pages/Home.jsx")
 
 const NotFound = lazy(() => import("../pages/NotFound.jsx"));
@@ -39,6 +40,11 @@ export const router = createBrowserRouter([
                         path: "/track",
                         element: <Cancion />,
                     },
+                    {
+                        path: "/results",
+                        element: <ResultadosBusqueda />,
+                    }
+                    ,
                     {
                         path: "/sign_in",
                         element: <InicioDeSesion />
