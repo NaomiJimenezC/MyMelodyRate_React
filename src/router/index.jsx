@@ -1,28 +1,30 @@
-import React from 'react';
-import {createBrowserRouter} from "react-router-dom";
+import React, { lazy } from 'react';
+import { createBrowserRouter } from "react-router-dom";
 import LayaoutPublic from "../Layaout/LayaoutPublic.jsx";
-import NotFound from "../pages/NotFound.jsx";
 import Home from "../pages/Home.jsx";
-import Artista from "../pages/Artista.jsx";
-import Album from "../pages/Album.jsx";
-import Cancion from "../pages/Cancion.jsx";
-import Perfil from "../pages/Perfil.jsx";
-import Lista from "../pages/Lista.jsx";
-import InicioDeSesion from "../pages/InicioDeSesion.jsx";
-import Registro from "../pages/Registro.jsx";
-import Contactos from "../pages/Contactos.jsx";
+import LayaoutPrivate from "../Layaout/LayaoutPrivate.jsx";
+import("../pages/Home.jsx")
 
+const NotFound = lazy(() => import("../pages/NotFound.jsx"));
+const Artista = lazy(() => import("../pages/Artista.jsx"));
+const Album = lazy(() => import("../pages/Album.jsx"));
+const Cancion = lazy(() => import("../pages/Cancion.jsx"));
+const Perfil = lazy(() => import("../pages/Perfil.jsx"));
+const Lista = lazy(() => import("../pages/Lista.jsx"));
+const InicioDeSesion = lazy(() => import("../pages/InicioDeSesion.jsx"));
+const Registro = lazy(() => import("../pages/Registro.jsx"));
+const Contactos = lazy(() => import("../pages/Contactos.jsx"));
 
 export const router = createBrowserRouter([
     {
-        path:"/",
-        element:<LayaoutPublic/>,
+        path: "/",
+        element: <LayaoutPublic />,
         errorElement: <NotFound />,
-        children:[
+        children: [
             {
-                children:[
+                children: [
                     {
-                        index:true,
+                        index: true,
                         element: <Home />,
                     },
                     {
@@ -38,30 +40,35 @@ export const router = createBrowserRouter([
                         element: <Cancion />,
                     },
                     {
-                        path: "/user",
-                        element:<Perfil />
-                    },
-                    {
-                        path: "/list", //TODO()considerar poner /list:id
-                        element: <Lista />,
-                    },
-                    {
                         path: "/sign_in",
-                        element:<InicioDeSesion />
+                        element: <InicioDeSesion />
                     },
                     {
                         path: "/sign_up",
-                        element:<Registro />
+                        element: <Registro />
                     },
                     {
                         path: "/contact_me",
-                        element:<Contactos />
+                        element: <Contactos />
+                    },
+                    {
+                        path: "/user",
+                        element: <LayaoutPrivate />,
+                        children:[
+                            {
+                                index: true,
+                                element: <Perfil />,
+                            },
+                            {
+                                path: "/list",
+                                element: <Lista />,
+                            },
+                        ]
                     }
                 ]
             }
         ],
     }
-])
-
+]);
 
 export default router;

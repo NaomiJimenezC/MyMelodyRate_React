@@ -1,5 +1,7 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {login, register} from "../config/Firebase.jsx";
+import {UserContext} from "../Context/UserProvider.jsx";
+import {useNavigate} from "react-router-dom";
 
 const Registro = () => {
     const [nombre, setNombre] = React.useState('');
@@ -10,6 +12,13 @@ const Registro = () => {
     const [check, setCheck] = React.useState(false);
     const [valid, setValid] = React.useState(false);
     const [error, setError] = React.useState(false);
+
+    const {user} = useContext(UserContext);
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        user && navigate('/user');
+    },[user])
 
     const onHandleBlurName = (e) => {
         const value = e.target.value;

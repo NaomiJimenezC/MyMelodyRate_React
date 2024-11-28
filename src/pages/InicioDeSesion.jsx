@@ -1,12 +1,18 @@
-import React from 'react';
+import React, {useContext, useEffect} from 'react';
 import {useNavigate} from "react-router-dom";
 import {login} from "../config/Firebase.jsx";
+import {UserContext} from "../Context/UserProvider.jsx";
 
 const InicioDeSesion = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
 
+    const {user} = useContext(UserContext);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        user && navigate('/user');
+    },[user])
 
     const handleEmailBlur = (e) => {
         const correo = e.target.value;
