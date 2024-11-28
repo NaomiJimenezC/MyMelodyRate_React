@@ -6,7 +6,7 @@
 ## Estructura del proyecto
 
 Para la creación de la estructura del proyecto me he basado en la misma que genera el propio vite y lo que hemos visto en
-clase. Al final quedaría algo así ![img.png](img.png) Que explicando un poco de manera organizada:
+clase. Al final quedaría algo así ![img.png](public/Documentacion/img.png) Que explicando un poco de manera organizada:
 
 ### Contenido de la raiz
 * **Public**: Este directorio contiene el logo de la pestaña en la web
@@ -122,3 +122,152 @@ const handleEmailBlur = (e) => {
         }
     };
 ```
+# Tercera entrega
+
+## Demostración del funcionamiento de las funcionalidades asíncronas:
+
+```js
+export const hacerSolicitud = async (urlPeticion) => {
+    await verificarToken(); // Asegura que el token sea válido
+    try {
+        const response = await axios.get(urlPeticion, {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        return response.data; // Devuelve los datos de la API
+    } catch (error) {
+        console.error('Error al hacer la solicitud:', error.response?.data || error.message);
+        throw error; // Lanza el error para que sea manejado donde se llame
+    }
+};
+```
+
+```js
+export const resultadosBusqueda = async ({ query, type, limit = 25, offset = 0 }) => {
+    try {
+        return await hacerSolicitud(`https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=${limit}&offset=${offset}`);
+    } catch (error) {
+        console.error("Error al obtener las canciones");
+        throw error;
+    }
+};
+```
+![img_1.png](public/Documentacion/img_1.png)
+
+## Implementaciones nuevas
+
+### Formulario de Login y Registro implementados, validados y funcionales.
+Para los formularios de Login y Registro hice un par de formularios con sus respectivas validaciones nada que destacar.
+Solo comentar que se añadieron las implementaciones con Firebase, de tal manera que cuando rellenas el formulario de 
+registro se creará una nueva cuenta y cuando inicies sesión pues estarás usando esa cuenta.
+
+Este es todo el código de Firebase:
+```js
+const app = initializeApp(firebaseConfig);
+
+export const auth = getAuth(app);
+
+export const login = ({email,password}) => {
+    return signInWithEmailAndPassword(auth,email,password);
+}
+
+export const register = ({email, password}) => {
+    return createUserWithEmailAndPassword(auth,email,password);
+}
+
+export const logOut =  () => signOut(auth)
+```
+
+
+### Integración de API con comunicación asíncrona en la aplicación (al menos una vista que consuma datos de la API).
+Mi historia con la API en este proyecto ha sido curiosa, cambié la api a la de Spotify por temas de imagenes que otorgaba
+la api de lastfm. Como la API de spotify requería de token hice un archivo en la carpeta config para todo el asunto del
+token y para hacerme un método que simplemente le pasas la url de la petición API y ya se encarga de hacerla 
+
+```js
+export const hacerSolicitud = async (urlPeticion) => {
+    await verificarToken(); // Asegura que el token sea válido
+    try {
+        const response = await axios.get(urlPeticion, {
+            headers: { Authorization: `Bearer ${accessToken}` }
+        });
+        return response.data; // Devuelve los datos de la API
+    } catch (error) {
+        console.error('Error al hacer la solicitud:', error.response?.data || error.message);
+        throw error; // Lanza el error para que sea manejado donde se llame
+    }
+};
+```
+En lo personal me hice esta función para ahorrarme líneas de código repetido. Y aquí un bloque de código en el que se
+consume datos de la API:
+```js
+const getNewAlbums = async () => {
+    try {
+        return await hacerSolicitud("https://api.spotify.com/v1/browse/new-releases?limit=5");
+    } catch (error) {
+        // setError(error);
+        console.error("Error al obtener nuevos álbumes:", error);
+        throw error; // Vuelve a lanzar el error si necesitas manejarlo aguas arriba
+    }
+};
+```
+
+### Paginación de la galería principal de la aplicación.
+Respecto la paginación, fue un poco dificil de pensar cómo hacerlo. Pero estuve viendo que la API de Spotify se le podía
+hacer una petición de búsqueda con la que tener resultados que paginar (también aporta facilidades para paginar).
+
+Hice que los resultados de la barra de búsqueda del header se pasasen por parámetros en la url en la página de resultados
+y con lo siguiente, recogí esos datos enviados desde cualquier parte de la web hacía la página de resultados:
+```js
+// Parámetros de búsqueda
+    const location = useLocation();
+
+    const queryParams = new URLSearchParams(location.search);
+    const query = queryParams.get('query');
+    const type = queryParams.get('type');
+```
+
+Luego usé esta función para hacer la petición:
+```js
+export const resultadosBusqueda = async ({ query, type, limit = 25, offset = 0 }) => {
+    try {
+        return await hacerSolicitud(`https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=${limit}&offset=${offset}`);
+    } catch (error) {
+        console.error("Error al obtener las canciones");
+        throw error;
+    }
+};
+```
+Le paso los resultados por page máximos como parámetro, a parte de pasarle el texto de la búsqueda y el tipo de dato
+que estás buscando. También el offet. El resultado el siguiente que se puede apreciar en esta imagen:
+![img_1.png](public/Documentacion/img_1.png)
+### Aplicación completamente enrutada, incluyendo layouts cuando sea necesario, y usando lazyload.
+La aplicación está totalmente enrutada como se puede ver en el router/index.js. Se hizo uso de un LayaoutPublico para 
+todas aquellas páginas que no requiriesen de una autenticación y para el resto usé un LayoautPrivado.
+
+Respecto al lazyload, puse todas las páginas menos el home porque consideré que si no eran necesario que estuviesen
+cargadas en todo momento, ya cargarán cuando el usuario acceda a ellos
+```js
+const NotFound = lazy(() => import("../pages/NotFound.jsx"));
+const Artista = lazy(() => import("../pages/Artista.jsx"));
+const Album = lazy(() => import("../pages/Album.jsx"));
+const Cancion = lazy(() => import("../pages/Cancion.jsx"));
+const Perfil = lazy(() => import("../pages/Perfil.jsx"));
+const Lista = lazy(() => import("../pages/Lista.jsx"));
+const InicioDeSesion = lazy(() => import("../pages/InicioDeSesion.jsx"));
+const Registro = lazy(() => import("../pages/Registro.jsx"));
+const Contactos = lazy(() => import("../pages/Contactos.jsx"));
+```
+### Implementación de protección de rutas y vistas (utilizando React Router).
+He implementado la protección de rutas en aquellas páginas que requieren una autenticación previa, por ejemplo en tu perfil
+si no has iniciado sesión o en una lista tuya.
+```js
+const {user} = useContext(UserContext);
+const navigate = useNavigate();
+
+useEffect(() => {
+    !user && navigate('/login');
+},[user])
+```
+Cuando inicias sesión con tu cuenta, eso cambia un estado global que controla el estado de la cuenta.
+Si accedes a tu perfil sin iniciar sesión pues cuando intente cargar la página y vea que el estado globar user no está
+pues te dirigirá a login para que inicies sesión.

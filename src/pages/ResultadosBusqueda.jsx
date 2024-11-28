@@ -77,7 +77,7 @@ const ResultadosBusqueda = () => {
     );
 };
 
-export const resultadosBusqueda = async ({ query, type, limit = 10, offset = 0 }) => {
+export const resultadosBusqueda = async ({ query, type, limit = 25, offset = 0 }) => {
     try {
         return await hacerSolicitud(`https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=${limit}&offset=${offset}`);
     } catch (error) {
