@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Card from "../Components/Card.jsx";
 import CardArtist from "../Components/CardArtist.jsx";
 import {hacerSolicitud} from "../config/Spotify.jsx";
+import {getAuth} from "firebase/auth";
 
 const Home = () => {
     const [albums, setAlbums] = useState([]); // Estado para almacenar los álbumes
@@ -17,11 +18,12 @@ const Home = () => {
         } );
 
         getTopSongs().then(r =>{
-            console.log(r)
+            setSongs(r.items)
         })
 
         getTopArtists().then(r =>{
             console.log(r)
+            setArtists(r)
         })
 
     }, []);  // Dependencia de handleNewAlbums
@@ -34,8 +36,8 @@ const Home = () => {
                     albums.length > 0 ? (
                         albums.map((album) => (
                             <article key={album.id}>
+                                <img src={album.images[1].url} alt={album.name}/>
                                 <p>{album.name}</p>
-                                <img src={album.images[0].url} alt={album.name} />
                             </article>
                         ))
                     ) : (
@@ -45,14 +47,36 @@ const Home = () => {
             </section>
 
             <section className="canciones">
-                <Card/>
-                <Card/>
-                <Card/>
+                {error && <div>{error}</div>}
+                {
+
+                    songs.length > 0 ? (
+                        songs.map((song) => (
+                            <article key={song.id}>
+                                <img src={song.track.album.images[2].url} alt={song.name}/>
+                                <p>{song.track.name}</p>
+                            </article>
+                        ))
+                    ) : (
+                        <p>No se han encontrado álbumes.</p>
+                    )
+                }
             </section>
             <section className="artistas">
-                <CardArtist/>
-                <CardArtist/>
-                <CardArtist/>
+                {error && <div>{error}</div>}
+                {
+
+                    artists.length > 0 ? (
+                        artists.map((artist) => (
+                            <article key={artist.id}>
+                                <img src={artist.images[2].url} alt={artist.name}/>
+                                <p>{artist.name}</p>
+                            </article>
+                        ))
+                    ) : (
+                        <p>No se han encontrado álbumes.</p>
+                    )
+                }
             </section>
         </>
     );
@@ -74,11 +98,31 @@ const getNewAlbums = async () => {
 
 const getTopSongs = async () => {
     try {
-        return await hacerSolicitud("https://open.spotify.com/playlist/2z7k6r8z0OlXuDsIuy80ZN")
+        return await hacerSolicitud("https://api.spotify.com/v1/playlists/2z7k6r8z0OlXuDsIuy80ZN/tracks?" +
+            "fields=items%28track%28name%2Cid%2Calbum%28images%29%29%29&limit=5")
     } catch (error) {
         console.error("Error al obtener las canciones")
         throw error;
     }
 }
 
-const getTopArtists = async () => {}
+const getTopArtists = async () => {
+    try {
+        const response = await hacerSolicitud("https://api.spotify.com/v1/playlists/2z7k6r8z0OlXuDsIuy80ZN/tracks?" +
+            "fields=items(track(artists(id)))&limit=5");
+
+        const artistIds = response.items.map(item => item.track.artists[0].id);
+        const uniqueArtistIds = [...new Set(artistIds)];
+
+        const artistsInfo = await hacerSolicitud(`https://api.spotify.com/v1/artists?ids=${uniqueArtistIds.join(',')}`);
+
+        return artistsInfo.artists.map(artist => ({
+            id: artist.id,
+            name: artist.name,
+            images: artist.images
+        }));
+    } catch (error) {
+        console.error("Error al obtener los artistas", error);
+        throw error;
+    }
+}
