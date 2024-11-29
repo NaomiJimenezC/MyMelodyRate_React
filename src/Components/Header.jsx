@@ -21,9 +21,6 @@ const Header = () => {
         // Validación para que no esté vacío
     });
 
-    const handleSelectChange = (event) => {
-        setSelectedOption(event.target.value); // Actualiza el estado con la opción seleccionada
-    };
 
     return (
         <header>
@@ -32,21 +29,30 @@ const Header = () => {
                     <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"} style={{ width: '200px' }} />
                 </a>
                 <Formik
-                    initialValues={{ searchTerm: '', selectedOption: 'track' }} // Valores iniciales
+                    initialValues={{ searchTerm: '', selectedOption: 'artist' }} // Valores iniciales
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         // Redirigir a la página de resultados con los valores seleccionados
                         navigate(`/results?type=${values.selectedOption}&query=${values.searchTerm}`);
                     }}
                 >
-                    {() => (
+                    {({ values, handleChange, handleBlur, isSubmitting }) => (
                         <Form className="d-flex"> {/* Formulario para manejar búsqueda */}
-                            <select onChange={handleSelectChange}>
+                            <Field
+                                as="select"
+                                id="selectSearchTerm"
+                                name="selectedOption" // Asegúrate de que el nombre coincida con el initialValues
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                value={values.selectedOption}
+                            >
+                                {/* Opción por defecto */}
                                 <option value="artist">Artista</option>
                                 <option value="album">Álbum</option>
                                 <option value="track">Canción</option>
                                 <option value="Todo">Todo</option>
-                            </select>
+                            </Field>
+
                             <Field
                                 name="searchTerm"
                                 className="form-control me-2 bg-input"
@@ -54,8 +60,10 @@ const Header = () => {
                                 placeholder="Busca un artista, álbum, canción..."
                                 aria-label="Search"
                             />
-                            <ErrorMessage name="searchTerm" component="div" style={{ color: 'red' }} /> {/* Mensaje de error */}
-                            <button type="submit" className="btn btn-outline-success">Buscar</button> {/* Botón para enviar búsqueda */}
+                            <ErrorMessage name="searchTerm" component="div" style={{ color: 'red' }} />
+                            <button type="submit" className="btn btn-outline-success" disabled={isSubmitting}>
+                                Buscar
+                            </button>
                         </Form>
                     )}
                 </Formik>
