@@ -7,8 +7,6 @@ import {ErrorMessage, Field, Form, Formik} from "formik";
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext);
-    const [selectedOption, setSelectedOption] = useState("Artista"); // Estado para la opción seleccionada
-
     const navigate = useNavigate();
 
     const handleLogout = async () => {
@@ -33,6 +31,7 @@ const Header = () => {
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         // Redirigir a la página de resultados con los valores seleccionados
+                        console.log(values);
                         navigate(`/results?type=${values.selectedOption}&query=${values.searchTerm}`);
                     }}
                 >
@@ -40,7 +39,7 @@ const Header = () => {
                         <Form className="d-flex"> {/* Formulario para manejar búsqueda */}
                             <Field
                                 as="select"
-                                id="selectSearchTerm"
+                                id="selectedOption"
                                 name="selectedOption" // Asegúrate de que el nombre coincida con el initialValues
                                 onChange={handleChange}
                                 onBlur={handleBlur}

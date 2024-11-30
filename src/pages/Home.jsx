@@ -3,6 +3,7 @@ import Card from "../Components/Card.jsx";
 import CardArtist from "../Components/CardArtist.jsx";
 import {hacerSolicitud} from "../config/Spotify.jsx";
 import {getAuth} from "firebase/auth";
+import ListMusic from "../Components/ListMusic.jsx";
 
 const Home = () => {
     const [albums, setAlbums] = useState([]); // Estado para almacenar los álbumes
@@ -22,7 +23,6 @@ const Home = () => {
         })
 
         getTopArtists().then(r =>{
-            console.log(r)
             setArtists(r)
         })
 
@@ -30,54 +30,62 @@ const Home = () => {
 
     return (
         <>
-            <section className="album">
-                {error && <div>{error}</div>}
-                {
-                    albums.length > 0 ? (
-                        albums.map((album) => (
-                            <article key={album.id}>
-                                <img src={album.images[1].url} alt={album.name}/>
-                                <p>{album.name}</p>
-                            </article>
-                        ))
-                    ) : (
-                        <p>No se han encontrado álbumes.</p>
-                    )
-                }
-            </section>
+            <ListMusic
+                musics={albums}
+                error={error}
+                tittle={"Álbumnes"}
+                numberImg={2}
+            />
 
-            <section className="canciones">
-                {error && <div>{error}</div>}
-                {
+            {/*<ListMusic*/}
+            {/*    musics={songs}*/}
+            {/*    error={error}*/}
+            {/*    tittle={"Canciones más populares"}*/}
+            {/*/>*/}
 
-                    songs.length > 0 ? (
-                        songs.map((song) => (
-                            <article key={song.id}>
-                                <img src={song.track.album.images[2].url} alt={song.name}/>
-                                <p>{song.track.name}</p>
-                            </article>
-                        ))
-                    ) : (
-                        <p>No se han encontrado álbumes.</p>
-                    )
-                }
-            </section>
-            <section className="artistas">
-                {error && <div>{error}</div>}
-                {
+            <ListMusic
+                musics={artists}
+                error={error}
+                tittle={"Artistas del momento"}
+                numberImg={1}
+            />
 
-                    artists.length > 0 ? (
-                        artists.map((artist) => (
-                            <article key={artist.id}>
-                                <img src={artist.images[2].url} alt={artist.name}/>
-                                <p>{artist.name}</p>
-                            </article>
-                        ))
-                    ) : (
-                        <p>No se han encontrado álbumes.</p>
-                    )
-                }
-            </section>
+
+            {/*<section className="canciones">*/}
+            {/*    {error && <div>{error}</div>}*/}
+            {/*    {console.log(songs)}*/}
+            {/*    {*/}
+
+            {/*        songs.length > 0 ? (*/}
+            {/*            songs.map((song) => (*/}
+            {/*                <article key={song.id}>*/}
+            {/*                    <img src={song.track.album.images[2].url} alt={song.name}/>*/}
+            {/*                    <p>{song.track.name}</p>*/}
+            {/*                </article>*/}
+            {/*            ))*/}
+            {/*        ) : (*/}
+            {/*            <p>No se han encontrado álbumes.</p>*/}
+            {/*        )*/}
+            {/*    }*/}
+            {/*</section>*/}
+            {/*<section className="artistas">*/}
+            {/*    {error && <div>{error}</div>}*/}
+            {/*    {console.log(artists)}*/}
+            {/*    {console.log(albums)}*/}
+            {/*    {*/}
+
+            {/*        artists.length > 0 ? (*/}
+            {/*            artists.map((artist) => (*/}
+            {/*                <article key={artist.id}>*/}
+            {/*                    <img src={artist.images[2].url} alt={artist.name}/>*/}
+            {/*                    <p>{artist.name}</p>*/}
+            {/*                </article>*/}
+            {/*            ))*/}
+            {/*        ) : (*/}
+            {/*            <p>No se han encontrado álbumes.</p>*/}
+            {/*        )*/}
+            {/*    }*/}
+            {/*</section>*/}
         </>
     );
 };
