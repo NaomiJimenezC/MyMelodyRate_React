@@ -8,17 +8,23 @@ const ListMusic = ({ musics, error, tittle,numberImg }) => {
             <h1>{tittle}</h1>
             {error && <div>{error}</div>}
             {musics.length > 0 ? (
+                // console.log(music.track.album.images[numberImg].url);// Para depurar
+                // console.log(music.track.name);
+
                 // eslint-disable-next-line react/prop-types
                 musics.map((music) => {
-                    console.log(music.images[numberImg].url); // Para depurar
+                    const musicName = (typeof music.name !== "undefined") ? music.name : music.track.name;
+                    const musicImage = (typeof music.images !== "undefined") ?  music.images[numberImg].url :
+                        music.track.album.images[numberImg].url; // es para las imagenes de las canciones que en el json están de otra manera
+
+
                     return (
                         <>
                             <Card
                                 key={music.id}
-                                name={music.name}
-                                images={music.images[numberImg].url}
+                                name={musicName}
+                                image={musicImage}
                             />
-                            <img src={music.images[numberImg].url} alt={music.name} style={{width: '10%'}} />
                         </>
                     );
                 })

@@ -34,14 +34,15 @@ const Home = () => {
                 musics={albums}
                 error={error}
                 tittle={"Álbumnes"}
-                numberImg={2}
+                numberImg={0}
             />
 
-            {/*<ListMusic*/}
-            {/*    musics={songs}*/}
-            {/*    error={error}*/}
-            {/*    tittle={"Canciones más populares"}*/}
-            {/*/>*/}
+            <ListMusic
+                musics={songs}
+                error={error}
+                tittle={"Canciones más populares"}
+                numberImg={1}
+            />
 
             <ListMusic
                 musics={artists}
@@ -50,42 +51,6 @@ const Home = () => {
                 numberImg={1}
             />
 
-
-            {/*<section className="canciones">*/}
-            {/*    {error && <div>{error}</div>}*/}
-            {/*    {console.log(songs)}*/}
-            {/*    {*/}
-
-            {/*        songs.length > 0 ? (*/}
-            {/*            songs.map((song) => (*/}
-            {/*                <article key={song.id}>*/}
-            {/*                    <img src={song.track.album.images[2].url} alt={song.name}/>*/}
-            {/*                    <p>{song.track.name}</p>*/}
-            {/*                </article>*/}
-            {/*            ))*/}
-            {/*        ) : (*/}
-            {/*            <p>No se han encontrado álbumes.</p>*/}
-            {/*        )*/}
-            {/*    }*/}
-            {/*</section>*/}
-            {/*<section className="artistas">*/}
-            {/*    {error && <div>{error}</div>}*/}
-            {/*    {console.log(artists)}*/}
-            {/*    {console.log(albums)}*/}
-            {/*    {*/}
-
-            {/*        artists.length > 0 ? (*/}
-            {/*            artists.map((artist) => (*/}
-            {/*                <article key={artist.id}>*/}
-            {/*                    <img src={artist.images[2].url} alt={artist.name}/>*/}
-            {/*                    <p>{artist.name}</p>*/}
-            {/*                </article>*/}
-            {/*            ))*/}
-            {/*        ) : (*/}
-            {/*            <p>No se han encontrado álbumes.</p>*/}
-            {/*        )*/}
-            {/*    }*/}
-            {/*</section>*/}
         </>
     );
 };
@@ -107,7 +72,7 @@ const getNewAlbums = async () => {
 const getTopSongs = async () => {
     try {
         return await hacerSolicitud("https://api.spotify.com/v1/playlists/2z7k6r8z0OlXuDsIuy80ZN/tracks?" +
-            "fields=items%28track%28name%2Cid%2Calbum%28images%29%29%29&limit=5")
+            "fields=items%28track%28name%2Chref%2Calbum%28name%2Chref%2Cimages%29%29%29&limit=5")
     } catch (error) {
         console.error("Error al obtener las canciones")
         throw error;
