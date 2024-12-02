@@ -23,8 +23,9 @@ const ResultadosBusqueda = () => {
             if (query && type) {
                 try {
                     const data = await resultadosBusqueda({ query, type, limit, offset: currentPage * limit });
-                    setResults(data.tracks.items); // Asumiendo que los resultados están en data.tracks.items
-                    setTotalResults(data.tracks.total); // Total de resultados para paginación
+                    const typeKey = type + 's'; // 'artists', 'albums', o 'tracks'
+                    setResults(data[typeKey]?.items || []);
+                    setTotalResults(data[typeKey]?.total || 0);
                 } catch (error) {
                     console.error("Error al obtener los resultados:", error);
                 } finally {
@@ -45,13 +46,21 @@ const ResultadosBusqueda = () => {
             <p>Tipo: {type}</p>
             <ul>
                 {results.length > 0 ? (
-                    results.map(track => (
-                        <li key={track.id}>
-                            <a href={track.external_urls.spotify} target="_blank" rel="noopener noreferrer">
-                                {track.name} - {track.artists.map(artist => artist.name).join(', ')}
-                            </a>
-                        </li>
-                    ))
+                    results.map(music => {
+                        console.log(music);
+                        const imagenes = (typeof music.images !== "undefined") ? music.images : music.album.images;
+                        // Verifica si tiene imagenes
+                        if (imagenes.length > 0) {
+                            return (
+                                <li key={music.id} style={{paddingTop: "1px"}}>
+                                    <img src={imagenes[0].url} alt={music.name} style={{ width: "1%" }} />
+                                    <a href={`/${type}?id=${music.id}`} target="_blank" >
+                                        {music.name} - {music.artists?.map(artist => artist.name).join(', ')}
+                                    </a>
+                                </li>
+                            );
+                        }
+                    })
                 ) : (
                     <p>No se encontraron resultados.</p>
                 )}
@@ -77,7 +86,7 @@ const ResultadosBusqueda = () => {
     );
 };
 
-export const resultadosBusqueda = async ({ query, type, limit = 25, offset = 0 }) => {
+export const resultadosBusqueda = async ({query, type, limit = 25, offset = 0}) => {
     try {
         return await hacerSolicitud(`https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=${limit}&offset=${offset}`);
     } catch (error) {
