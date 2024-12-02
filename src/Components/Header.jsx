@@ -40,7 +40,7 @@ const Header = () => {
                             <Field
                                 as="select"
                                 id="selectedOption"
-                                name="selectedOption" // Asegúrate de que el nombre coincida con el initialValues
+                                name="selectedOption"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.selectedOption}

@@ -35,6 +35,7 @@ const Home = () => {
                 error={error}
                 tittle={"Álbumnes"}
                 numberImg={0}
+                typeOfMusic={"album"}
             />
 
             <ListMusic
@@ -42,6 +43,7 @@ const Home = () => {
                 error={error}
                 tittle={"Canciones más populares"}
                 numberImg={1}
+                typeOfMusic={"track"}
             />
 
             <ListMusic
@@ -49,6 +51,7 @@ const Home = () => {
                 error={error}
                 tittle={"Artistas del momento"}
                 numberImg={1}
+                typeOfMusic={"artist"}
             />
 
         </>
@@ -71,8 +74,8 @@ const getNewAlbums = async () => {
 
 const getTopSongs = async () => {
     try {
-        return await hacerSolicitud("https://api.spotify.com/v1/playlists/2z7k6r8z0OlXuDsIuy80ZN/tracks?" +
-            "fields=items%28track%28name%2Chref%2Calbum%28name%2Chref%2Cimages%29%29%29&limit=5")
+        return await hacerSolicitud('https://api.spotify.com/v1/playlists/2z7k6r8z0OlXuDsIuy80ZN/tracks?' +
+            'fields=items%28track%28id%2Cname%2Chref%2Calbum%28name%2Chref%2Cimages%29%29%29&limit=5')
     } catch (error) {
         console.error("Error al obtener las canciones")
         throw error;
