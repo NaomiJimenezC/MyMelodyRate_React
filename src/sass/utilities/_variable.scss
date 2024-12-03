@@ -1,4 +1,10 @@
-@import "/home/usuariom/Documentos/DWEC/react/MyMelodyRate_React/src/sass/external_fonts/Afacad/Afacad-Italic-VariableFont_wght.ttf";
+@font-face {
+  font-family: 'Afacad';
+  src: url('src/sass/external_fonts/Afacad/Afacad-VariableFont_wght.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root{
   --font-family: "Open Sans", sans-serif;
   --primary-color: #FFD9AE ;
@@ -10,4 +16,8 @@ body.light-mode{
     --primary-color:#1F1D51;
 }
 
-$titles__Font:"Afacad"
+$titles__Font:"Afacad", sans-serif;
+
+//Header and Footer color
+$navbar__colour:#161441;
+$input__colour:#FFECEC;

@@ -4,6 +4,7 @@ import { logOut } from "../config/Firebase.jsx";
 import { UserContext } from "../Context/UserProvider.jsx";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
+import "../sass/components/_header.scss"
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext);
@@ -21,13 +22,13 @@ const Header = () => {
 
 
     return (
-        <header>
-            <nav className="navbar navbar-expand-lg bg-mi-color text-descriptivo w-100 container-fluid">
-                <a className="navbar-brand" href="/">
-                    <img className={"img-sin-fondo"} src={"src/assets/mYmelody rate.svg"} alt={"Logo"} style={{ width: '200px' }} />
+        <header className="header">
+            <nav className="header__nav">
+                <a href="/" className="header__logo-link">
+                    <img className="header__logo" src="src/assets/mYmelody rate.svg" alt="Logo"/>
                 </a>
                 <Formik
-                    initialValues={{ searchTerm: '', selectedOption: 'artist' }} // Valores iniciales
+                    initialValues={{searchTerm: '', selectedOption: 'artist'}} // Valores iniciales
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         // Redirigir a la página de resultados con los valores seleccionados
@@ -35,12 +36,13 @@ const Header = () => {
                         navigate(`/results?type=${values.selectedOption}&query=${values.searchTerm}`);
                     }}
                 >
-                    {({ values, handleChange, handleBlur, isSubmitting }) => (
-                        <Form className="d-flex"> {/* Formulario para manejar búsqueda */}
+                    {({values, handleChange, handleBlur, isSubmitting}) => (
+                        <Form className="header__search-form"> {/* Formulario para manejar búsqueda */}
                             <Field
                                 as="select"
                                 id="selectedOption"
                                 name="selectedOption"
+                                className="header__search-select"
                                 onChange={handleChange}
                                 onBlur={handleBlur}
                                 value={values.selectedOption}
@@ -54,34 +56,33 @@ const Header = () => {
 
                             <Field
                                 name="searchTerm"
-                                className="form-control me-2 bg-input"
+                                className="header__search-input"
                                 type="search"
                                 placeholder="Busca un artista, álbum, canción..."
                                 aria-label="Search"
                             />
-                            <ErrorMessage name="searchTerm" component="div" style={{ color: 'red' }} />
-                            <button type="submit" className="btn btn-outline-success" disabled={isSubmitting}>
+                            <ErrorMessage name="searchTerm" component="div" className="header__search-error"/>
+                            <button type="submit" className="header__search-button" disabled={isSubmitting}>
                                 Buscar
                             </button>
                         </Form>
                     )}
                 </Formik>
-                <ul className="navbar-nav ms-auto">
-                    <li className="nav-item">
+                <ul className="header__nav-list">
+                    <li className="header__nav-item">
                         {user ? (
                             <>
-                                <NavLink className={"nav-link text-white"} onClick={handleLogout}>Cerrar Sesión</NavLink>
-                                <NavLink className="nav-link text-white" to="/user">Perfil</NavLink>
+                                <NavLink className="header__nav-link" onClick={handleLogout}>Cerrar Sesión</NavLink>
+                                <NavLink className="header__nav-link" to="/user">Perfil</NavLink>
                             </>
                         ) : (
-                            <>
-                                <NavLink className="nav-link text-white" to="/sign_in">Inicio de sesión</NavLink>
-                            </>
+                            <NavLink className="header__nav-link" to="/sign_in">Inicio de sesión</NavLink>
                         )}
                     </li>
                 </ul>
             </nav>
         </header>
+
     );
 };
 

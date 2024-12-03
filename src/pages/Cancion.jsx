@@ -13,7 +13,7 @@ const Cancion = () => {
         if (id) {
             getTrackInfo(id).then(setInfoTrack).catch(error => console.error(error));
         }
-    }, [id]); // Add id as a dependency to re-fetch if it changes
+    }, [id]);
 
     if (!infoTrack) {
         return <p>Cargando información de la canción...</p>; // Loading state
@@ -48,14 +48,23 @@ const Cancion = () => {
 
             </section>
             <section>
-
-                <h1>Se encuentra en el siguiente álbum:</h1>
-                <Card
-                    id={album.id}
-                    name={album.name}
-                    image={album.images[1].url}
-                    typeOfMusic={album.type}
+                <iframe // sé que iframe puede ser una mala práctica, pero era necesario para mi web
+                    src={`https://open.spotify.com/embed/track/${id}?utm_source=generator&theme=1`}
+                    allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+                    loading="lazy"
+                    title="Spotify Embed: Track"
                 />
+            </section>
+            <section>
+                <article>
+                    <h1>Se encuentra en el siguiente álbum:</h1>
+                    <Card
+                        id={album.id}
+                        name={album.name}
+                        image={album.images[1].url}
+                        typeOfMusic={album.type}
+                    />
+                </article>
             </section>
         </main>
     );

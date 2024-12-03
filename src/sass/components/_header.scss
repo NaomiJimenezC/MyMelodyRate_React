@@ -1,0 +1,76 @@
+@use "../utilities/variable" as *;
+
+.header {
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    padding: 1rem;
+    background-color: $navbar__colour;
+  }
+
+  &__logo {
+    width: 1rem;
+    height: auto;
+  }
+
+  &__search-form {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    margin: 0 2rem;
+  }
+
+  &__search-select {
+    padding: 0.5rem;
+    margin-right: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  &__search-input {
+    flex-grow: 1;
+    padding: 0.5rem;
+    margin-right: 1rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+
+  &__search-button {
+    padding: 0.5rem 1rem;
+    background-color: #FFFBA2;
+    color: 3221F65;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &:disabled {
+      background-color: #BDBCBC;
+      color: #414039;
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  &__nav-list {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__nav-item {
+    margin-left: 1rem;
+  }
+
+  &__nav-link {
+    color: white;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
