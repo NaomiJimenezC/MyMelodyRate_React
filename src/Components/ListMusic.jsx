@@ -7,10 +7,8 @@ const ListMusic = ({ musics, error, tittle,numberImg,typeOfMusic }) => {
         <section>
             <h1>{tittle}</h1>
             {error && <div>{error}</div>}
+            {/* eslint-disable-next-line react/prop-types */}
             {musics.length > 0 ? (
-                // console.log(music.track.album.images[numberImg].url);// Para depurar
-                // console.log(music.track.name);
-
                 // eslint-disable-next-line react/prop-types
                 musics.map((music) => {
                     const musicId = (typeof music.id !== "undefined") ? music.id : music.track.id;
