@@ -18,7 +18,7 @@ const Card = ({ id, image, name, typeOfMusic }) => {
     };
 
     return (
-        <article onClick={handleClick} style={{ cursor: 'pointer' }}>
+        <article onClick={handleClick}>
             <img src={image} alt={name}/>
             <p>{name}</p>
         </article>

@@ -31,7 +31,7 @@ const Cancion = () => {
             <section>
                 {album && album.images && album.images.length > 0 && (
                     <img src={album.images[1].url} alt={`${name} album cover`}/>
-                )}
+                )} {/*una nunca sabe cuando fiarse de que alguna comprobación falte*/}
                 <h1>{name}</h1>
                 <p>Fecha de lanzamiento: {album.release_date}</p>
 
@@ -56,16 +56,16 @@ const Cancion = () => {
                 />
             </section>
             <section>
-                <article>
-                    <h1>Se encuentra en el siguiente álbum:</h1>
-                    <Card
+                <h1>Se encuentra en el siguiente álbum:</h1>
+                <Card
                         id={album.id}
                         name={album.name}
                         image={album.images[1].url}
                         typeOfMusic={album.type}
-                    />
-                </article>
+                />
             </section>
+
+
         </main>
     );
 };

@@ -32,11 +32,14 @@ const Header = () => {
                     validationSchema={validationSchema}
                     onSubmit={(values) => {
                         // Redirigir a la página de resultados con los valores seleccionados
-                        console.log(values);
                         navigate(`/results?type=${values.selectedOption}&query=${values.searchTerm}`);
                     }}
                 >
-                    {({values, handleChange, handleBlur, isSubmitting}) => (
+                    {(    {values,
+                          handleChange,
+                          handleBlur,
+                          isSubmitting}
+                     ) => (
                         <Form className="header__search-form"> {/* Formulario para manejar búsqueda */}
                             <Field
                                 as="select"
