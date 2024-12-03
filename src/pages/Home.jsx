@@ -98,6 +98,7 @@ const getTopArtists = async () => {
             images: artist.images
         }));
     } catch (error) {
+
         console.error("Error al obtener los artistas", error);
         throw error;
     }
