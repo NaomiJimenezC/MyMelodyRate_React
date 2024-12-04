@@ -26,7 +26,7 @@ const Contactos = () => {
     });
 
     return (
-        <section>
+        <main>
             <Formik
                 initialValues={{name: "", email: "", message: ""}}
                 onSubmit={onSubmit}
@@ -103,7 +103,7 @@ const Contactos = () => {
                     )
                 }
             </Formik>
-        </section>
+        </main>
     )
 };
 
