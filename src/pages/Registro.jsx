@@ -177,7 +177,7 @@ const Registro = () => {
                     <button
                         type="submit"
                         className={valid ? "form-button-enable": "form-button-disable"}
-                        disabled={!valid}
+                        disabled={valid}
                     >Registrarse
                     </button>
                 </form>

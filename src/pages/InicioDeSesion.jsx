@@ -6,6 +6,7 @@ import {UserContext} from "../Context/UserProvider.jsx";
 const InicioDeSesion = () => {
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
+    const [error,setError] = React.useState('');
 
     const {user} = useContext(UserContext);
     const navigate = useNavigate();
@@ -20,7 +21,8 @@ const InicioDeSesion = () => {
         if (emailRegex.test(correo)) {
             setEmail(correo);
         } else {
-            console.log("Por favor, ingrese un email válido.");//TODO(cambiar por una función que lo pinte)
+            setError("Por favor, ingrese un email válido.");
+            console.log(error);//TODO(cambiar por una función que lo pinte)
         }
     };
 
@@ -30,8 +32,10 @@ const InicioDeSesion = () => {
 
         if (passwordRegex.test(password)) {
             setPassword(password);
+            setError("")
         } else {
-            console.log("Por favor, ingrese una contraseña de 8 caracteres, con una minúscula, una mayúscula y un número minimo");
+            setError("Por favor, ingrese una contraseña de 8 caracteres, con una minúscula, una mayúscula y un número minimo");
+            console.log(error);
         }
     }
 
@@ -41,8 +45,9 @@ const InicioDeSesion = () => {
             await login({email, password});
             console.log('login successful');
         } catch (error) {
-            console.log(error.code);
-            console.log(error.message);
+            setError(error.message);
+            console.log(error);
+
         }
     }
 

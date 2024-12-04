@@ -41,13 +41,14 @@ const Artista = () => {
             }
         } finally {
             setSubmitting(false);
-        }
+        }//TODO(CAMBIAR)
     };
 
     const validationSchema = Yup.object().shape({
         message: Yup.string().trim().min(3, "Mínimo 3 caracteres").required("Se requiere algo de contenido"),
     });
-
+    console.log(topTracks);
+    console.log(artistAlbum);
     return (
         <main>
             <section>
@@ -59,34 +60,34 @@ const Artista = () => {
                 </article>
             </section>
             <section>
-                <h2>Canción más populares</h2>
-                {topTracks.map((track) => {
-                    const {id, name, type, album} = track
-                    return (
-                        <Card
-                            key={id}
-                            id={id}
-                            name={name}
-                            image={album.images[1].url}
-                            typeOfMusic={type}
-                        />
-                    )
-                })}
+                {/*<h2>Canción más populares</h2>*/}
+                {/*{topTracks.tracks.map((track) => {*/}
+                {/*    const {id, name, type, album} = track*/}
+                {/*    return (*/}
+                {/*        <Card*/}
+                {/*            key={id}*/}
+                {/*            id={id}*/}
+                {/*            name={name}*/}
+                {/*            image={album.images[1].url}*/}
+                {/*            typeOfMusic={type}*/}
+                {/*        />*/}
+                {/*    )*/}
+                {/*})}*/}
             </section>
             <section>
-                <h2>Álbumnes</h2>
-                {artistAlbum.items.map((album) => {
-                    const {id, name, type, images} = album
-                    return (
-                        <Card
-                            key={id}
-                            id={id}
-                            name={name}
-                            image={images[1].url}
-                            typeOfMusic={type}
-                        />
-                    )
-                })}
+                {/*<h2>Álbumnes</h2>*/}
+                {/*{artistAlbum.items.map((album) => {*/}
+                {/*    const {id, name, type, images} = album*/}
+                {/*    return (*/}
+                {/*        <Card*/}
+                {/*            key={id}*/}
+                {/*            id={id}*/}
+                {/*            name={name}*/}
+                {/*            image={images[1].url}*/}
+                {/*            typeOfMusic={type}*/}
+                {/*        />*/}
+                {/*    )*/}
+                {/*})}*/}
             </section>
             <section>
                 <Formik
