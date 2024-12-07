@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {hacerSolicitud} from "../config/Spotify.jsx";
 import Card from "../Components/Card.jsx";
 import {ErrorMessage, Field, Form, Formik} from "formik";
@@ -16,6 +16,7 @@ const Artista = () => {
     const id = queryParams.get('id');
     const nameArtist = queryParams.get('name');
 
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -23,6 +24,8 @@ const Artista = () => {
             getArtistInfo(id).then(setInfoArtist).catch(error => console.error(error));
             getArtistAlbum(nameArtist).then(r => setArtistAlbum(r.albums.items)).catch(error => console.log(error));
             getArtistTopTrack(nameArtist,id).then(r=>setTopTracks(r)).catch(error => console.error(error));
+        } else {
+            navigate('/');
         }
     }, [id]);
 

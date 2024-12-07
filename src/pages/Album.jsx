@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { hacerSolicitud } from "../config/Spotify.jsx";
 import Card from "../Components/Card.jsx";
 import { ErrorMessage, Field, Form, Formik } from "formik";
@@ -10,10 +10,13 @@ const Album = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get('id');
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (id) {
             getAlbumInfo(id).then(setInfoAlbum).catch(error => console.error(error));
+        } else {
+            navigate('/');
         }
     }, [id]);
 
