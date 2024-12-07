@@ -22,7 +22,7 @@ const ResultadosBusqueda = () => {
         const getResults = async () => {
             if (query && type) {
                 try {
-                    const data = await resultadosBusqueda({ query, type, limit, offset: currentPage * limit });
+                    const data = await realizarBusqueda({ query, type, limit, offset: currentPage * limit });
                     const typeKey = type + 's'; // 'artists', 'albums', o 'tracks'
                     setResults(data[typeKey]?.items || []);
                     setTotalResults(data[typeKey]?.total || 0);
@@ -86,7 +86,7 @@ const ResultadosBusqueda = () => {
     );
 };
 
-export const resultadosBusqueda = async ({query, type, limit = 25, offset = 0}) => {
+export const realizarBusqueda = async ({query, type, limit = 25, offset = 0}) => {
     try {
         return await hacerSolicitud(`https://api.spotify.com/v1/search?q=${query}&type=${type}&market=ES&limit=${limit}&offset=${offset}`);
     } catch (error) {

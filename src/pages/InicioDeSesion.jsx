@@ -61,7 +61,7 @@ const InicioDeSesion = () => {
                         name={"email"}
                         placeholder={"Email"}
                         value={email}
-                        onBlur={handleEmailBlur}
+                        onChange={handleEmailBlur}
                     />
                     <label id={"password"}>Password</label>
                     <input
@@ -69,7 +69,7 @@ const InicioDeSesion = () => {
                         type="password"
                         name={"password"}
                         value={password}
-                        onBlur={handlePasswordBlur}
+                        onChange={handlePasswordBlur}
                     />
 
                     <button type="submit">Iniciar sesión</button>

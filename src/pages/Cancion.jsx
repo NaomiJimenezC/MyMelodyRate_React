@@ -38,7 +38,7 @@ const Cancion = () => {
                 <p>
                     Artista(s): {artists.map((artist, index) => (
                     <span key={artist.id}>
-                         <a href={`/artist?id=${artist.id}`}>{artist.name}</a>
+                         <a href={`/artist?id=${artist.id}&name=${artist.name}`}>{artist.name}</a>
                         {index < artists.length - 1 && ", "}
                     </span>
                 ))}

@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 import {hacerSolicitud} from "../config/Spotify.jsx";
-import ListMusic from "../Components/ListMusic.jsx";
 import Card from "../Components/Card.jsx";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+
 
 const Artista = () => {
     const [infoArtist, setInfoArtist] = useState(null);
@@ -14,14 +14,15 @@ const Artista = () => {
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get('id');
+    const nameArtist = queryParams.get('name');
 
 
 
     useEffect(() => {
         if (id) {
             getArtistInfo(id).then(setInfoArtist).catch(error => console.error(error));
-            getArtistAlbum(id).then(setArtistAlbum).catch(error => console.error(error));
-            getArtistTopTrack(id).then(setTopTracks).catch(error => console.error(error));
+            getArtistAlbum(nameArtist).then(r => setArtistAlbum(r.albums.items)).catch(error => console.log(error));
+            getArtistTopTrack(nameArtist,id).then(r=>setTopTracks(r)).catch(error => console.error(error));
         }
     }, [id]);
 
@@ -47,7 +48,6 @@ const Artista = () => {
     const validationSchema = Yup.object().shape({
         message: Yup.string().trim().min(3, "Mínimo 3 caracteres").required("Se requiere algo de contenido"),
     });
-    console.log(topTracks);
     console.log(artistAlbum);
     return (
         <main>
@@ -60,34 +60,34 @@ const Artista = () => {
                 </article>
             </section>
             <section>
-                {/*<h2>Canción más populares</h2>*/}
-                {/*{topTracks.tracks.map((track) => {*/}
-                {/*    const {id, name, type, album} = track*/}
-                {/*    return (*/}
-                {/*        <Card*/}
-                {/*            key={id}*/}
-                {/*            id={id}*/}
-                {/*            name={name}*/}
-                {/*            image={album.images[1].url}*/}
-                {/*            typeOfMusic={type}*/}
-                {/*        />*/}
-                {/*    )*/}
-                {/*})}*/}
+                <h2>Canción más populares</h2>
+                {topTracks?.slice(0,5).map((track) => {
+                    const {id, name, type, album} = track
+                    return (
+                        <Card
+                            key={id}
+                            id={id}
+                            name={name}
+                            image={album.images[1].url}
+                            typeOfMusic={type}
+                        />
+                    )
+                })}
             </section>
             <section>
-                {/*<h2>Álbumnes</h2>*/}
-                {/*{artistAlbum.items.map((album) => {*/}
-                {/*    const {id, name, type, images} = album*/}
-                {/*    return (*/}
-                {/*        <Card*/}
-                {/*            key={id}*/}
-                {/*            id={id}*/}
-                {/*            name={name}*/}
-                {/*            image={images[1].url}*/}
-                {/*            typeOfMusic={type}*/}
-                {/*        />*/}
-                {/*    )*/}
-                {/*})}*/}
+                <h2>Álbumnes</h2>
+                {artistAlbum?.map((album) => {
+                    const {id, name, type, images} = album
+                    return (
+                        <Card
+                            key={id}
+                            id={id}
+                            name={name}
+                            image={images[1].url}
+                            typeOfMusic={type}
+                        />
+                    )
+                })}
             </section>
             <section>
                 <Formik
@@ -128,22 +128,30 @@ const getArtistInfo = async (id) => {
     }
 }
 
-const getArtistTopTrack = async (id) => {
+const getArtistAlbum = async (name) => {
     try {
-        return await hacerSolicitud(`https://api.spotify.com/v1/artists/${id}/top-tracks`);
+        const nameParsed= (name.includes(" ")) ? name.replace(" ", "+") : name;
+        return await hacerSolicitud(`https://api.spotify.com/v1/search?q=artist%3A${nameParsed}&type=album&limit=5&offset=0`);
     } catch (error) {
-        console.log("Error al obtener la información del álbum", error);
+        console.error("Error al obtener las canciones");
         throw error;
     }
-}
+};
 
-const getArtistAlbum = async (id) => {
+
+const getArtistTopTrack = async (name,artistId) => {
     try {
-        return await hacerSolicitud(`https://api.spotify.com/v1/artists/${id}/albums`);
+        const nameParsed= (name.includes(" ")) ? name.replace(" ", "+") : name;
+        const artistTracks = await hacerSolicitud(`https://api.spotify.com/v1/search?q=artist%3A${nameParsed}&type=track&limit=25&offset=0`);
+
+        return artistTracks.tracks.items
+            .filter(track => track.artists.some(artist => artist.id === artistId))
+            .sort((a, b) => b.popularity - a.popularity);
+
     } catch (error) {
-        console.log("Error al obtener la información del álbum", error);
+        console.error("Error al obtener las canciones");
         throw error;
     }
-}
+};
 
 export default Artista;

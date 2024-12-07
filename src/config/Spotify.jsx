@@ -2,26 +2,27 @@ import axios from "axios";
 
 let accessToken ;
 let tokenExpiration;
-
 const obtenerToken = async () => {
     try {
+        console.log(import.meta.env.VITE_SPOTIFY_CLIENT_ID);
         const response = await axios.post(
             "https://accounts.spotify.com/api/token",
             new URLSearchParams({
                 grant_type: 'client_credentials',
                 client_id: import.meta.env.VITE_SPOTIFY_CLIENT_ID,
-                client_secret: "aae0eef128f54d539db828a35af28dd7",
+                client_secret: import.meta.env.VITE_SPOTIFY_SECRET_CLIENT_ID,
             }),
             { headers: { 'Content-Type': 'application/x-www-form-urlencoded' } }
         );
 
         accessToken = response.data.access_token;
-        tokenExpiration = Date.now() + response.data.expires_in * 1000; // Calcula el tiempo de expiración
+        tokenExpiration = Date.now() + response.data.expires_in * 1000;
     } catch (error) {
         console.error('Error al obtener el token:', error.response?.data || error.message);
         throw error;
     }
 };
+
 
 // Verifica si el token sigue siendo válido
 async function verificarToken() {

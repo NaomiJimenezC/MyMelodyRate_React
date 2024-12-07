@@ -9,7 +9,7 @@ const Card = ({ id, image, name, typeOfMusic }) => {
         const validTypes = ["artist", "album", "track"];
 
         if (validTypes.includes(typeOfMusic)) {
-            navigate(`/${typeOfMusic}?id=${id}`);
+            navigate(`/${typeOfMusic}?id=${id}&name=${name}`);
         } else {
             console.warn(`Tipo no válido: ${typeOfMusic}`);
             // Puedes decidir qué hacer en caso de un tipo no reconocido

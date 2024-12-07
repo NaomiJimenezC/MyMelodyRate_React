@@ -3,7 +3,7 @@ import { createBrowserRouter } from "react-router-dom";
 import LayaoutPublic from "../Layaout/LayaoutPublic.jsx";
 import Home from "../pages/Home.jsx";
 import LayaoutPrivate from "../Layaout/LayaoutPrivate.jsx";
-import ResultadosBusqueda from "../pages/ResultadosBusqueda.jsx";
+import ResultadosBusqueda from "../pages/RealizarBusqueda.jsx";
 import("../pages/Home.jsx")
 
 const NotFound = lazy(() => import("../pages/NotFound.jsx"));
