@@ -6,6 +6,7 @@ import {RouterProvider} from "react-router-dom";
 import router from "./router/index.jsx";
 import UserProvider from "./Context/UserProvider.jsx";
 import FavoriteListProvider from "./Context/FavoriteListProvider.jsx";
+import "./sass/base/_reset.scss"
 
 
 createRoot(document.getElementById('root')).render(
