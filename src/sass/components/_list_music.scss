@@ -1,0 +1,17 @@
+// ListMusic.scss
+
+.list-music {
+  display: flex; /* Utiliza flexbox para alinear los elementos horizontalmente */
+  flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay suficiente espacio */
+  justify-content: space-between;
+
+  h1 {
+    width: 100%; /* Asegura que el título ocupe toda la fila */
+    text-align: center; /* Centra el título */
+  }
+
+  h2 {
+    width: 100%; /* Asegura que el título ocupe toda la fila */
+    text-align: center; /* Centra el título */
+  }
+}

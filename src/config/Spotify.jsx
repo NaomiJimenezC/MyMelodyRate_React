@@ -4,7 +4,6 @@ let accessToken ;
 let tokenExpiration;
 const obtenerToken = async () => {
     try {
-        console.log(import.meta.env.VITE_SPOTIFY_CLIENT_ID);
         const response = await axios.post(
             "https://accounts.spotify.com/api/token",
             new URLSearchParams({
@@ -28,7 +27,6 @@ const obtenerToken = async () => {
 async function verificarToken() {
 
     if (!accessToken || Date.now() >= tokenExpiration) {
-        console.log('Token expirado. Solicitando uno nuevo...');
         await obtenerToken();
     }
 }

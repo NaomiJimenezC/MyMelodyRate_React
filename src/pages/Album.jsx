@@ -7,7 +7,9 @@ import * as Yup from "yup";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
 import {UserContext} from "../Context/UserProvider.jsx";
-import {FavoriteListContext} from "../Context/FavoriteListProviders.jsx";
+import {FavoriteListContext} from "../Context/FavoriteListProvider.jsx";
+import "../sass/components/_list_music.scss"
+import "../sass/components/item_track.scss"
 
 const Album = () => {
     const [infoAlbum, setInfoAlbum] = useState(null);
@@ -53,40 +55,47 @@ const Album = () => {
 
     return (
         <main>
-            <section> {/* Info básica */}
+            <section className="album-info"> {/* Info básica */}
                 <article>
                     {images && images.length > 0 && (
                         <img src={images[1]?.url} alt={`${name} album cover`}/>
                     )}
-                    <h1>{name}</h1>
-                    <p>
-                        Artista(s): {artists.map((artist, index) => (
-                        <span key={artist.id}>
+                    <div>
+                        <h1>{name}</h1>
+                        <p>
+                            Artista(s): {artists.map((artist, index) => (
+                            <span key={artist.id}>
                                 <a href={`/artist?id=${artist.id}&name=${artist.name}`}>{artist.name}</a>
-                            {index < artists.length - 1 && ", "}
+                                {index < artists.length - 1 && ", "}
                             </span>
-                    ))}
-                    </p>
-                    <p>Fecha de lanzamiento: {release_date}</p>
-                    <p>Canciones totales: {tracks.total}</p>
-                    <a onClick={() => {
-                        if (user) {
-                            const artist = {
-                                id,
-                                name,
-                                image: images.images[1]?.url,
-                                type: "album"
-                            };
-                            toggleFavorite("album", artist)
-                        } else {
-                            navigate(`/sign_in`);
-                        }
-
-                    }}>
-                        {favoriteAlbums.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
-                            <FontAwesomeIcon icon={faHeart}/>}
-                    </a>
+                        ))}
+                        </p>
+                        <p>Fecha de lanzamiento: {release_date}</p>
+                        <p>Canciones totales: {tracks.total}</p>
+                        <a
+                            className="favorite-icon"
+                            onClick={() => {
+                                if (user) {
+                                    const artist = {
+                                        id,
+                                        name,
+                                        image: images[1]?.url,
+                                        type: "album"
+                                    };
+                                    toggleFavorite("album", artist);
+                                } else {
+                                    navigate(`/sign_in`);
+                                }
+                            }}
+                        >
+                            {favoriteAlbums.some(fav => fav.id === id) ?
+                                <FontAwesomeIcon icon="fa-solid fa-heart"/> :
+                                <FontAwesomeIcon icon={faHeart}/>}
+                        </a>
+                    </div>
                 </article>
+            </section>
+            <section>
                 <article>
                     <iframe
                         style={{borderRadius: '12px'}}
@@ -99,7 +108,7 @@ const Album = () => {
                 </article>
             </section>
 
-            <section>
+            <section className={"list-music"}>
                 <h1>Canciones</h1>
                 {tracks.items.map((track) => { // Cambié 'tracks' a 'tracks.items'
                     const {id, name, type} = track;
@@ -120,11 +129,11 @@ const Album = () => {
 
             <section>
                 <Formik
-                    initialValues={{ message: "" }}
+                    initialValues={{message: ""}}
                     onSubmit={onSubmit}
                     validationSchema={validationSchema}
                 >
-                    {({ values, handleChange, handleBlur, handleSubmit, isSubmitting, errors }) => (
+                    {({values, handleChange, handleBlur, handleSubmit, isSubmitting, errors}) => (
                         <Form onSubmit={handleSubmit}>
                             <Field
                                 as="textarea"

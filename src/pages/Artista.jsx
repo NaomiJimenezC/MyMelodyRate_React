@@ -5,9 +5,10 @@ import Card from "../Components/Card.jsx";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
 import {UserContext} from "../Context/UserProvider.jsx";
-import {FavoriteListContext} from "../Context/FavoriteListProviders.jsx";
+import {FavoriteListContext} from "../Context/FavoriteListProvider.jsx";
 import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "../sass/components/_list_music.scss"
 
 
 const Artista = () => {
@@ -21,7 +22,7 @@ const Artista = () => {
     const nameArtist = queryParams.get('name');
 
     const {user} = useContext(UserContext);
-    const {favoriteArtist,toggleFavorite} = useContext(FavoriteListContext);
+    const {favoriteArtists,toggleFavorite} = useContext(FavoriteListContext);
     const navigate = useNavigate();
 
 
@@ -57,7 +58,6 @@ const Artista = () => {
     const validationSchema = Yup.object().shape({
         message: Yup.string().trim().min(3, "Mínimo 3 caracteres").required("Se requiere algo de contenido"),
     });
-    console.log(artistAlbum);
     return (
         <main>
             <section>
@@ -79,12 +79,12 @@ const Artista = () => {
                         }
 
                     }}>
-                        {favoriteArtist.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
+                        {favoriteArtists.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
                             <FontAwesomeIcon icon={faHeart} />}
                     </a>
                 </article>
             </section>
-            <section>
+            <section className={"list-music"}>
                 <h2>Canción más populares</h2>
                 {topTracks?.slice(0,5).map((track) => {
                     const {id, name, type, album} = track
@@ -99,7 +99,7 @@ const Artista = () => {
                     )
                 })}
             </section>
-            <section>
+            <section className={"list-music"}>
                 <h2>Álbumnes</h2>
                 {artistAlbum?.map((album) => {
                     const {id, name, type, images} = album

@@ -1,0 +1,24 @@
+// Card.scss
+
+.card {
+  position: relative; /* Para posicionar el texto sobre la imagen */
+  width: 15rem; /* Ajusta según sea necesario */
+  cursor: pointer; /* Cambia el cursor al pasar sobre el artículo */
+
+  img {
+    width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+    filter: brightness(0.7); /* Oscurece la imagen */
+  }
+
+  .card-text {
+    position: absolute; /* Posiciona el texto sobre la imagen */
+    bottom: 0; /* Coloca el texto en la parte inferior */
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
+    color: white; /* Color del texto */
+    padding: 10px; /* Espaciado interno para el texto */
+    text-align: center; /* Centra el texto */
+  }
+}

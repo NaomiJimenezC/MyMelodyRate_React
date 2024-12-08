@@ -1,10 +1,9 @@
-import React, {createContext, useEffect, useState} from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
-
-export const FavoriteListContext = createContext()
+export const FavoriteListContext = createContext();
 
 // eslint-disable-next-line react/prop-types
-const FavoriteListProviders = ({children}) => {
+const FavoriteListProvider = ({ children }) => {
     const [favoriteSongs, setFavoriteSongs] = useState([]);
     const [favoriteAlbums, setFavoriteAlbums] = useState([]);
     const [favoriteArtists, setFavoriteArtists] = useState([]);
@@ -23,7 +22,7 @@ const FavoriteListProviders = ({children}) => {
     const toggleFavorite = (type, item) => {
         let currentFavorites, setFunction, storageKey;
 
-        switch(type) {
+        switch (type) {
             case 'song':
                 currentFavorites = favoriteSongs;
                 setFunction = setFavoriteSongs;
@@ -46,21 +45,21 @@ const FavoriteListProviders = ({children}) => {
         const newFavorites = currentFavorites.some(fav => fav.id === item.id)
             ? currentFavorites.filter(fav => fav.id !== item.id)
             : [...currentFavorites, item];
-        setFunction(newFavorites);
 
+        setFunction(newFavorites);
         localStorage.setItem(storageKey, JSON.stringify(newFavorites));
     };
 
     return (
-        <FavoriteListProviders value={{
+        <FavoriteListContext.Provider value={{
             favoriteSongs,
             favoriteAlbums,
             favoriteArtists,
             toggleFavorite
         }}>
             {children}
-        </FavoriteListProviders>
+        </FavoriteListContext.Provider>
     );
 };
 
-export default FavoriteListProviders;
+export default FavoriteListProvider;

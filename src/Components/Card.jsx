@@ -1,4 +1,6 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import "../sass/components/_cardSongAlbum.scss"
 
 const Card = ({ id, image, name, typeOfMusic }) => {
     const navigate = useNavigate();
@@ -16,9 +18,9 @@ const Card = ({ id, image, name, typeOfMusic }) => {
     };
 
     return (
-        <article onClick={handleClick}>
-            <img src={image} alt={name}/>
-            <p>{name}</p>
+        <article className={"card"} onClick={handleClick}>
+            <img src={image} alt={name}  />
+            <div className={"card-text"}>{name}</div>
         </article>
     );
 };

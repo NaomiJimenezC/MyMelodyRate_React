@@ -3,7 +3,7 @@ import {useLocation, useNavigate} from "react-router-dom";
 import { hacerSolicitud } from "../config/Spotify.jsx";
 import Card from "../Components/Card.jsx";
 import {UserContext} from "../Context/UserProvider.jsx";
-import {FavoriteListContext} from "../Context/FavoriteListProviders.jsx";
+import {FavoriteListContext} from "../Context/FavoriteListProvider.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
 
