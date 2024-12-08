@@ -1,9 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import {hacerSolicitud} from "../config/Spotify.jsx";
 import Card from "../Components/Card.jsx";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import * as Yup from "yup";
+import {UserContext} from "../Context/UserProvider.jsx";
+import {FavoriteListContext} from "../Context/FavoriteListProviders.jsx";
+import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 
 const Artista = () => {
@@ -16,6 +20,8 @@ const Artista = () => {
     const id = queryParams.get('id');
     const nameArtist = queryParams.get('name');
 
+    const {user} = useContext(UserContext);
+    const {favoriteArtist,toggleFavorite} = useContext(FavoriteListContext);
     const navigate = useNavigate();
 
 
@@ -60,6 +66,22 @@ const Artista = () => {
                     <h1>{infoArtist.name}</h1>
                     <p>Género(s): {infoArtist.genres.map((gender)=> gender).join(", ")}</p>
                     <a href={infoArtist.external_urls["spotify"]}>Perfil de Spotify</a>
+                    <a onClick={()=>{
+                        if (user) {
+                            const artist = {
+                                id,
+                                name: nameArtist,
+                                image: infoArtist.images[1].url,
+                                type: infoArtist.type };
+                            toggleFavorite("artist",artist)
+                        } else {
+                            navigate(`/sign_in`);
+                        }
+
+                    }}>
+                        {favoriteArtist.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
+                            <FontAwesomeIcon icon={faHeart} />}
+                    </a>
                 </article>
             </section>
             <section>

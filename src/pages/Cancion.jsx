@@ -1,14 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import { hacerSolicitud } from "../config/Spotify.jsx";
 import Card from "../Components/Card.jsx";
+import {UserContext} from "../Context/UserProvider.jsx";
+import {FavoriteListContext} from "../Context/FavoriteListProviders.jsx";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
 
 const Cancion = () => {
     const [infoTrack, setInfoTrack] = useState(null); // Initialize as null for better conditional rendering
+
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get('id');
+
     const navigate = useNavigate();
+    const {user} = useContext(UserContext);
+    const {favoriteSongs,toggleFavorite} = useContext(FavoriteListContext);
 
     useEffect(() => {
         if (id) {
@@ -47,6 +55,23 @@ const Cancion = () => {
                 ))}
                 </p>
                 <p>Duración: {(duration_ms / 60000).toFixed(2)} minutos</p>
+                <a onClick={() => {
+                    if (user) {
+                        const artist = {
+                            id,
+                            name,
+                            image: album.images[1].url,
+                            type: "track"
+                        };
+                        toggleFavorite("song", artist)
+                    } else {
+                        navigate(`/sign_in`);
+                    }
+
+                }}>
+                    {favoriteSongs.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
+                        <FontAwesomeIcon icon={faHeart}/>}
+                </a>
                 <a href={external_urls["spotify"]}>¡Escucha esta canción!</a>
 
             </section>
@@ -61,10 +86,10 @@ const Cancion = () => {
             <section>
                 <h1>Se encuentra en el siguiente álbum:</h1>
                 <Card
-                        id={album.id}
-                        name={album.name}
-                        image={album.images[1].url}
-                        typeOfMusic={album.type}
+                    id={album.id}
+                    name={album.name}
+                    image={album.images[1].url}
+                    typeOfMusic={album.type}
                 />
             </section>
 

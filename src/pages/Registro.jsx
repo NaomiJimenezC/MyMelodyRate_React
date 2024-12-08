@@ -76,17 +76,18 @@ const Registro = () => {
         e.preventDefault();
         if (valid){
             try {
-                await register({email, password});
-                console.log('login successful');
+                await register({email, password, displayName: nombre});
+                console.log('Registro exitoso');
+                navigate('/user');
             } catch (error) {
-                console.log(error.code);
-                console.log(error.message);
+                setError(error.message);
+                console.error("Error en el registro:", error);
             }
         } else {
-            console.log("completa los datos del formulario")
+            setError("Por favor, completa todos los campos del formulario");
         }
+    };
 
-    }
 
     const onHandleCheckClick = (e) => {
         const valorCheck = e.currentTarget.checked;
@@ -177,9 +178,10 @@ const Registro = () => {
                     <button
                         type="submit"
                         className={valid ? "form-button-enable": "form-button-disable"}
-                        disabled={valid}
+                        disabled={!valid}
                     >Registrarse
                     </button>
+                    {error && <p className="error-message">{error}</p>}
                 </form>
             </main>
 

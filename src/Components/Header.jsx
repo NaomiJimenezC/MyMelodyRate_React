@@ -5,6 +5,14 @@ import { UserContext } from "../Context/UserProvider.jsx";
 import * as Yup from "yup";
 import {ErrorMessage, Field, Form, Formik} from "formik";
 import "../sass/components/_header.scss"
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faHouse, faUser, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+library.add(faHouse, faUser);
+
+
+
+
 
 const Header = () => {
     const { user, setUser } = useContext(UserContext);
@@ -75,11 +83,13 @@ const Header = () => {
                     <li className="header__nav-item">
                         {user ? (
                             <>
-                                <NavLink className="header__nav-link" onClick={handleLogout}>Cerrar Sesión</NavLink>
-                                <NavLink className="header__nav-link" to="/user">Perfil</NavLink>
+                                <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
+                                <FontAwesomeIcon icon={faUser} onClick={() => navigate("/user")} />
+
                             </>
                         ) : (
-                            <NavLink className="header__nav-link" to="/sign_in">Inicio de sesión</NavLink>
+
+                            <FontAwesomeIcon icon={faRightFromBracket} onClick={() => navigate("/sign_in")} />
                         )}
                     </li>
                 </ul>

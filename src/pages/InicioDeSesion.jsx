@@ -1,84 +1,92 @@
-import React, {useContext, useEffect} from 'react';
-import {useNavigate} from "react-router-dom";
-import {login} from "../config/Firebase.jsx";
-import {UserContext} from "../Context/UserProvider.jsx";
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
+import { login } from "../config/Firebase.jsx";
+import { UserContext } from "../Context/UserProvider.jsx";
 
 const InicioDeSesion = () => {
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [error,setError] = React.useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
 
-    const {user} = useContext(UserContext);
+    const { user } = useContext(UserContext);
     const navigate = useNavigate();
 
     useEffect(() => {
-        user && navigate('/user');
-    },[user])
+        if (user) navigate('/user');
+    }, [user, navigate]);
 
-    const handleEmailBlur = (e) => {
-        const correo = e.target.value;
-        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-        if (emailRegex.test(correo)) {
-            setEmail(correo);
-        } else {
-            setError("Por favor, ingrese un email válido.");
-            console.log(error);//TODO(cambiar por una función que lo pinte)
-        }
+    const handleEmailChange = (e) => {
+        setEmail(e.target.value);
     };
 
-    const handlePasswordBlur = (e) => {
-        const password = e.target.value;
-        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    const handlePasswordChange = (e) => {
+        setPassword(e.target.value);
+    };
 
-        if (passwordRegex.test(password)) {
-            setPassword(password);
-            setError("")
-        } else {
-            setError("Por favor, ingrese una contraseña de 8 caracteres, con una minúscula, una mayúscula y un número minimo");
-            console.log(error);
+    const validateEmail = () => {
+        const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+        if (!emailRegex.test(email)) {
+            setError("Por favor, ingrese un email válido.");
+            return false;
         }
-    }
+        return true;
+    };
+
+    const validatePassword = () => {
+        const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setError("La contraseña debe tener al menos 8 caracteres, una minúscula, una mayúscula y un número.");
+            return false;
+        }
+        return true;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError('');
+
+        if (!validateEmail() || !validatePassword()) return;
+
         try {
-            await login({email, password});
-            console.log('login successful');
+            await login({ email, password });
+            console.log('Login successful');
         } catch (error) {
             setError(error.message);
-            console.log(error);
-
+            console.error(error);
         }
-    }
+    };
 
     return (
         <section>
             <article>
                 <form onSubmit={handleSubmit}>
-                    <label id={"email"} >Email</label>
+                    <label htmlFor="email">Email</label>
                     <input
-                        id={"email"}
-                        name={"email"}
-                        placeholder={"Email"}
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="Email"
                         value={email}
-                        onChange={handleEmailBlur}
+                        onChange={handleEmailChange}
+                        onBlur={validateEmail}
                     />
-                    <label id={"password"}>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input
-                        id={"password"}
+                        id="password"
                         type="password"
-                        name={"password"}
+                        name="password"
                         value={password}
-                        onChange={handlePasswordBlur}
+                        onChange={handlePasswordChange}
+                        onBlur={validatePassword}
                     />
-
+                    {error && <p className="error">{error}</p>}
                     <button type="submit">Iniciar sesión</button>
                 </form>
             </article>
 
             <article>
                 <h2>¿No tienes cuenta? ¡Únete a nosotros!</h2>
-                <button onClick={()=> navigate("/sign_up")}>¡Únete!</button>
+                <button onClick={() => navigate("/sign_up")}>¡Únete!</button>
             </article>
         </section>
     );

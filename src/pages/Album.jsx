@@ -1,9 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {useLocation, useNavigate} from "react-router-dom";
 import { hacerSolicitud } from "../config/Spotify.jsx";
 import Card from "../Components/Card.jsx";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
+import {UserContext} from "../Context/UserProvider.jsx";
+import {FavoriteListContext} from "../Context/FavoriteListProviders.jsx";
 
 const Album = () => {
     const [infoAlbum, setInfoAlbum] = useState(null);
@@ -11,6 +15,8 @@ const Album = () => {
     const queryParams = new URLSearchParams(location.search);
     const id = queryParams.get('id');
     const navigate = useNavigate();
+    const {user} = useContext(UserContext);
+    const {favoriteAlbums,toggleFavorite} = useContext(FavoriteListContext);
 
     useEffect(() => {
         if (id) {
@@ -50,7 +56,7 @@ const Album = () => {
             <section> {/* Info básica */}
                 <article>
                     {images && images.length > 0 && (
-                        <img src={images[1]?.url} alt={`${name} album cover`} />
+                        <img src={images[1]?.url} alt={`${name} album cover`}/>
                     )}
                     <h1>{name}</h1>
                     <p>
@@ -63,10 +69,27 @@ const Album = () => {
                     </p>
                     <p>Fecha de lanzamiento: {release_date}</p>
                     <p>Canciones totales: {tracks.total}</p>
+                    <a onClick={() => {
+                        if (user) {
+                            const artist = {
+                                id,
+                                name,
+                                image: images.images[1]?.url,
+                                type: "album"
+                            };
+                            toggleFavorite("album", artist)
+                        } else {
+                            navigate(`/sign_in`);
+                        }
+
+                    }}>
+                        {favoriteAlbums.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
+                            <FontAwesomeIcon icon={faHeart}/>}
+                    </a>
                 </article>
                 <article>
                     <iframe
-                        style={{ borderRadius: '12px' }}
+                        style={{borderRadius: '12px'}}
                         src={`https://open.spotify.com/embed/album/${id}?utm_source=generator`}
                         width="50%"
                         height="152"
@@ -79,7 +102,7 @@ const Album = () => {
             <section>
                 <h1>Canciones</h1>
                 {tracks.items.map((track) => { // Cambié 'tracks' a 'tracks.items'
-                    const { id, name, type } = track;
+                    const {id, name, type} = track;
 
                     const imageUrl = images && images.length > 1 ? images[1]?.url : ''; // Manejo seguro de la imagen
 

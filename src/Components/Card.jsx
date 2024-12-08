@@ -12,8 +12,6 @@ const Card = ({ id, image, name, typeOfMusic }) => {
             navigate(`/${typeOfMusic}?id=${id}&name=${name}`);
         } else {
             console.warn(`Tipo no válido: ${typeOfMusic}`);
-            // Puedes decidir qué hacer en caso de un tipo no reconocido
-            // Por ejemplo, navegar a una página por defecto o mostrar un mensaje de error
         }
     };
 

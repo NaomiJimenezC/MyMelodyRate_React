@@ -1,5 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword,signOut,updateProfile } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -19,8 +19,16 @@ export const login = ({email,password}) => {
     return signInWithEmailAndPassword(auth,email,password);
 }
 
-export const register = ({email, password}) => {
-    return createUserWithEmailAndPassword(auth,email,password);
-}
+export const register = async ({email, password, displayName}) => {
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await updateProfile(userCredential.user, { displayName: displayName });
+        return userCredential.user;
+    } catch (error) {
+        console.error("Error en el registro:", error);
+        throw error;
+    }
+};
+
 
 export const logOut =  () => signOut(auth)
