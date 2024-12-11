@@ -2,23 +2,39 @@
 
 .card {
   position: relative; /* Para posicionar el texto sobre la imagen */
-  width: 15rem; /* Ajusta según sea necesario */
+  width: 15rem; /* Ajusta el tamaño de la tarjeta según sea necesario */
+  height: 20rem; /* Ajusta la altura de la tarjeta */
   cursor: pointer; /* Cambia el cursor al pasar sobre el artículo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  text-align: center;
+  padding: 1rem;
 
-  img {
-    width: 100%; /* Hace que la imagen ocupe todo el ancho del contenedor */
-    height: auto; /* Mantiene la proporción de la imagen */
+  &__image {
+    opacity: 0.7; /* Reduce la opacidad de la imagen para hacer el texto más legible */
     filter: brightness(0.7); /* Oscurece la imagen */
   }
 
-  .card-text {
+  &__text {
     position: absolute; /* Posiciona el texto sobre la imagen */
     bottom: 0; /* Coloca el texto en la parte inferior */
     left: 0;
     right: 0;
-    background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
-    color: white; /* Color del texto */
     padding: 10px; /* Espaciado interno para el texto */
+    font-size: 1.2rem; /* Tamaño de fuente */
+    font-weight: bold; /* Hacer el texto en negrita */
     text-align: center; /* Centra el texto */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra del texto */
+  }
+
+  &--hover {
+    &:hover {
+      .card__text {
+        background-color: rgba(0, 0, 0, 0.7); /* Oscurece más el fondo del texto al pasar el mouse */
+      }
+    }
   }
 }

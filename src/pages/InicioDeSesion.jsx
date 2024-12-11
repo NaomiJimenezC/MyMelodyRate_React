@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import { login } from "../config/Firebase.jsx";
 import { UserContext } from "../Context/UserProvider.jsx";
+import "../sass/page/_login.scss"
 
 const InicioDeSesion = () => {
     const [email, setEmail] = useState('');
@@ -57,38 +58,41 @@ const InicioDeSesion = () => {
     };
 
     return (
-        <section>
-            <article>
-                <form onSubmit={handleSubmit}>
-                    <label htmlFor="email">Email</label>
-                    <input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="Email"
-                        value={email}
-                        onChange={handleEmailChange}
-                        onBlur={validateEmail}
-                    />
-                    <label htmlFor="password">Password</label>
-                    <input
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={password}
-                        onChange={handlePasswordChange}
-                        onBlur={validatePassword}
-                    />
-                    {error && <p className="error">{error}</p>}
-                    <button type="submit">Iniciar sesión</button>
-                </form>
-            </article>
+        <div className={"login-container"}>
+            <section className={"login"}>
+                <article className={"login__article"}>
+                    <form onSubmit={handleSubmit} className="login__form">
+                        <label htmlFor="email">Email</label>
+                        <input
+                            id="email"
+                            name="email"
+                            type="email"
+                            placeholder="Email"
+                            value={email}
+                            onChange={handleEmailChange}
+                            onBlur={validateEmail}
+                        />
+                        <label htmlFor="password">Password</label>
+                        <input
+                            id="password"
+                            type="password"
+                            name="password"
+                            value={password}
+                            onChange={handlePasswordChange}
+                            onBlur={validatePassword}
+                        />
+                        {error && <p className="error">{error}</p>}
+                        <button type="submit">Iniciar sesión</button>
+                    </form>
+                </article>
 
-            <article>
-                <h2>¿No tienes cuenta? ¡Únete a nosotros!</h2>
-                <button onClick={() => navigate("/sign_up")}>¡Únete!</button>
-            </article>
-        </section>
+                <article className={"login__article"}>
+                    <h2>¿No tienes cuenta? ¡Únete a nosotros!</h2>
+                    <button className={"login__article__button"} onClick={() => navigate("/sign_up")}>¡Únete!</button>
+                </article>
+            </section>
+        </div>
+
     );
 };
 

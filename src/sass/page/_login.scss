@@ -1,0 +1,36 @@
+@import "../utilities/_variable.scss";
+
+.login-container {//para centrarlo
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+.login {
+  display: inline-block;
+  vertical-align: middle;
+  padding: 3rem;
+  background-color: $primary-color;
+  border-radius: 1rem;
+
+  &__form{
+    display: flex;
+    flex-direction: column;
+    label, input, button {
+      display: block;
+      margin-bottom: 1rem;
+    }
+  }
+
+  &__article {
+    display: inline-block;
+    padding: 3rem ;
+    align-items: center;
+    vertical-align: middle;
+    &__button {
+      margin: 1rem auto 0;
+    }
+  }
+}

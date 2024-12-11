@@ -1,9 +1,9 @@
 import React from 'react';
 import "../sass/components/_button.scss";
 
-const Button = ({valor,clase}) => {
+const Button = ({valor}) => {
     return (
-        <button className={clase} >{valor}</button>
+        <button className={"button"} >{valor}</button>
     );
 };
 

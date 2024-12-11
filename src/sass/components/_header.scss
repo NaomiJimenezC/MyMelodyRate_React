@@ -7,12 +7,11 @@
     width: 100%;
     align-items: center;
     padding: 1rem;
-    background-color: $navbar__colour;
+    background-color: $navbar__color;
   }
 
   &__logo {
     width: 5rem;
-    height: auto;
   }
 
   &__search-form {
@@ -30,27 +29,12 @@
   }
 
   &__search-input {
+    background-color: $input__color;
     flex-grow: 1;
     padding: 0.5rem;
     margin-right: 1rem;
     border-radius: 4px;
     border: 1px solid #ccc;
-  }
-
-  &__search-button {
-    padding: 0.5rem 1rem;
-    background-color: #FFFBA2;
-    color: 3221F65;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-
-    &:disabled {
-      background-color: #BDBCBC;
-      color: #414039;
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
   }
 
   &__nav-list {
@@ -65,9 +49,9 @@
   }
 
   &__nav-link {
-    color: white;
+    color: $primary-color;
+    padding: 0.5rem 1rem;
     text-decoration: none;
-
     &:hover {
       text-decoration: underline;
     }

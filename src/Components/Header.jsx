@@ -83,8 +83,8 @@ const Header = () => {
                     <li className="header__nav-item">
                         {user ? (
                             <>
-                                <FontAwesomeIcon icon={faRightFromBracket} onClick={handleLogout} />
-                                <FontAwesomeIcon icon={faUser} onClick={() => navigate("/user")} />
+                                <FontAwesomeIcon className={"nav-link"} icon={faRightFromBracket} onClick={handleLogout} />
+                                <FontAwesomeIcon className={"nav-link"} icon={faUser} onClick={() => navigate("/user")} />
 
                             </>
                         ) : (

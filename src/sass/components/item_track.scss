@@ -1,28 +1,28 @@
 .album-card {
   display: flex; /* Utiliza flexbox para alinear la imagen y los detalles */
   align-items: center; /* Centra verticalmente los elementos dentro del contenedor */
-  margin-bottom: 20px; /* Espacio entre tarjetas */
+  margin-bottom: 0.2rem; /* Espacio entre tarjetas */
 
-  .album-image {
-    width: 150px; /* Ajusta el ancho de la imagen según sea necesario */
+  &__image {
+    width: 1.5rem; /* Ajusta el ancho de la imagen según sea necesario */
     height: auto; /* Mantiene la proporción de la imagen */
-    margin-right: 20px; /* Espacio entre la imagen y los detalles */
+    margin-right: 2rem;
   }
 
-  .album-details {
-    flex: 1; /* Permite que el contenedor de detalles ocupe el espacio restante */
+  &__details {
+    flex: 1;
 
-    h1 {
-      margin: 0; /* Elimina el margen por defecto del h1 */
-      font-size: 1.5em; /* Tamaño de fuente para el nombre del álbum */
+    &__title {
+      margin: 0;
+      font-size: 1.5em;
     }
 
-    p {
-      margin: 5px 0; /* Espaciado entre párrafos */
-      font-size: 1em; /* Tamaño de fuente para los párrafos */
+    &__description {
+      margin: 5px 0;
+      font-size: 1em;
     }
 
-    a {
+    &__link {
       color: #007bff; /* Color del enlace */
       text-decoration: none; /* Elimina el subrayado del enlace */
 

@@ -1,23 +1,35 @@
+// Tipography
+$font-family: "Open Sans", sans-serif;
+$titles__Font: "Afacad", sans-serif;
+
 @font-face {
   font-family: 'Afacad';
-  src: url('src/sass/external_fonts/Afacad/Afacad-VariableFont_wght.ttf') format('truetype');
+  src: url("../external_fonts/Afacad/Afacad-VariableFont_wght.ttf") format('truetype');
   font-weight: normal;
   font-style: normal;
 }
 
-:root{
-  --font-family: "Open Sans", sans-serif;
-  --primary-color: #FFD9AE ;
-  --background-colour: #1F1D51;
+// Colors
+$primary-color: #FFD9AE;
+$background-color: #1F1D51;
+$navbar__color: #161441;
+
+//light mode
+$header-color-light-mode: #f4f2e2;
+$background-color-light-mode: #fcfbea;
+$primary-color-light-mode: #1F1D51;
+
+//input
+$input__color: #FFECEC;
+
+:root {
+  --font-family: #{$font-family};
+  --primary-color: #{$primary-color};
+  --background-colour: #{$background-color};
 }
 
-body.light-mode{
-    --background-colour: #FDFCDF;
-    --primary-color:#1F1D51;
+body.light-mode {
+  --header-color: #{$header-color-light-mode};
+  --background-colour: #{$background-color-light-mode};
+  --primary-color: #{$primary-color-light-mode};
 }
-
-$titles__Font:"Afacad", sans-serif;
-
-//Header and Footer color
-$navbar__colour:#161441;
-$input__colour:#FFECEC;
