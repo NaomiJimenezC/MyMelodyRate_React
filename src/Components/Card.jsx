@@ -19,8 +19,8 @@ const Card = ({ id, image, name, typeOfMusic }) => {
 
     return (
         <article className={"card"} onClick={handleClick}>
-            <img src={image} alt={name}  />
-            <div className={"card-text"}>{name}</div>
+            <img className={"card__image"} src={image} alt={name}  />
+            <div className={"card__text"}>{name}</div>
         </article>
     );
 };
