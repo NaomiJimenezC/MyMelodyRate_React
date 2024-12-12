@@ -61,27 +61,29 @@ const Artista = () => {
     });
     return (
         <main>
-            <section>
-                <article>
-                    <img src={infoArtist.images[1].url} alt={infoArtist.name} />
-                    <h1>{infoArtist.name}</h1>
-                    <p>Género(s): {infoArtist.genres.map((gender)=> gender).join(", ")}</p>
-                    <a href={infoArtist.external_urls["spotify"]}>Perfil de Spotify</a>
-                    <a onClick={()=>{
+            <section className={"item-info"}>
+
+                <img className={"item-info__image"} src={infoArtist.images[1].url} alt={infoArtist.name}/>
+                <article className={"item-info__details"}>
+                    <h1 className={"details__tittle"}>{infoArtist.name}</h1>
+                    <p className={"details__description"}>Género(s): {infoArtist.genres.map((gender) => gender).join(", ")}</p>
+                    <a className={"details__link"} href={infoArtist.external_urls["spotify"]}>Perfil de Spotify</a>
+                    <a onClick={() => {
                         if (user) {
                             const artist = {
                                 id,
                                 name: nameArtist,
                                 image: infoArtist.images[1].url,
-                                type: infoArtist.type };
-                            toggleFavorite("artist",artist)
+                                type: infoArtist.type
+                            };
+                            toggleFavorite("artist", artist)
                         } else {
                             navigate(`/sign_in`);
                         }
 
                     }}>
                         {favoriteArtists.some(fav => fav.id === id) ? <FontAwesomeIcon icon="fa-solid fa-heart"/> :
-                            <FontAwesomeIcon icon={faHeart} />}
+                            <FontAwesomeIcon icon={faHeart}/>}
                     </a>
                 </article>
             </section>

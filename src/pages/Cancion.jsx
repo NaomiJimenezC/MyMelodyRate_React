@@ -40,7 +40,7 @@ const Cancion = () => {
     } = infoTrack;
     return (
         <main>
-            <section className={"album-card"}>
+            <section className={"item-info"}>
                 {album && album.images && album.images.length > 0 && (
                     <img src={album.images[1].url} className={"album-card__image"} alt={`${name} album cover`}/>
                 )} {/*una nunca sabe cuando fiarse de que alguna comprobación falte*/}
