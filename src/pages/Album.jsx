@@ -9,7 +9,7 @@ import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
 import {UserContext} from "../Context/UserProvider.jsx";
 import {FavoriteListContext} from "../Context/FavoriteListProvider.jsx";
 import "../sass/components/_list_music.scss"
-import "../sass/components/item_track.scss"
+import "../sass/components/_item_track.scss"
 
 const Album = () => {
     const [infoAlbum, setInfoAlbum] = useState(null);

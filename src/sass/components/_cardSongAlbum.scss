@@ -1,4 +1,5 @@
 // Card.scss
+@import "../utilities/_variable.scss";
 
 .card {
   position: relative; /* Para posicionar el texto sobre la imagen */
@@ -22,6 +23,7 @@
     bottom: 0; /* Coloca el texto en la parte inferior */
     left: 0;
     right: 0;
+    color: $primary-color;
     padding: 10px; /* Espaciado interno para el texto */
     font-size: 1.2rem; /* Tamaño de fuente */
     font-weight: bold; /* Hacer el texto en negrita */
@@ -30,11 +32,13 @@
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); /* Sombra del texto */
   }
 
-  &--hover {
     &:hover {
+      &__image {
+        backdrop-filter: blur(2px);
+      }
       .card__text {
         background-color: rgba(0, 0, 0, 0.7); /* Oscurece más el fondo del texto al pasar el mouse */
       }
     }
-  }
+
 }

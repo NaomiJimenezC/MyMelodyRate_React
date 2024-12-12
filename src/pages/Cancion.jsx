@@ -6,6 +6,7 @@ import {UserContext} from "../Context/UserProvider.jsx";
 import {FavoriteListContext} from "../Context/FavoriteListProvider.jsx";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
+import "../sass/utilities/_variable.scss"
 
 const Cancion = () => {
     const [infoTrack, setInfoTrack] = useState(null); // Initialize as null for better conditional rendering
@@ -39,22 +40,25 @@ const Cancion = () => {
     } = infoTrack;
     return (
         <main>
-            <section>
+            <section className={"album-card"}>
                 {album && album.images && album.images.length > 0 && (
-                    <img src={album.images[1].url} alt={`${name} album cover`}/>
+                    <img src={album.images[1].url} className={"album-card__image"} alt={`${name} album cover`}/>
                 )} {/*una nunca sabe cuando fiarse de que alguna comprobación falte*/}
-                <h1>{name}</h1>
-                <p>Fecha de lanzamiento: {album.release_date}</p>
+                <h1 className={"album-card__tittle"}>{name}</h1>
+                <p className={"album-card__description"}>Fecha de lanzamiento: {album.release_date}</p>
 
-                <p>
+                <p className={"album-card__description"}>
                     Artista(s): {artists.map((artist, index) => (
                     <span key={artist.id}>
-                         <a href={`/artist?id=${artist.id}&name=${artist.name}`}>{artist.name}</a>
+                         <a className={"album-card__link"} href={`/artist?id=${artist.id}&name=${artist.name}`}>
+                        {artist.name}
+                        </a>
                         {index < artists.length - 1 && ", "}
-                    </span>
+                     </span>
                 ))}
                 </p>
-                <p>Duración: {(duration_ms / 60000).toFixed(2)} minutos</p>
+
+                <p className={"album-card__description"}>Duración: {(duration_ms / 60000).toFixed(2)} minutos</p>
                 <a onClick={() => {
                     if (user) {
                         const artist = {
@@ -103,7 +107,7 @@ const getTrackInfo = async (id) => {
         return await hacerSolicitud(`https://api.spotify.com/v1/tracks/${id}`);
     } catch (error) {
         console.error("Error al obtener la información de la canción", error);
-        throw error; // Rethrow to handle in the component
+        throw error;
     }
 };
 

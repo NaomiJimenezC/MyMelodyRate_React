@@ -1,0 +1,40 @@
+@import "../utilities/variable.scss";
+
+.album-card {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+
+  &__image {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin-right: 1rem;
+  }
+
+  &__details {
+    flex: 1;
+
+    &__title {
+      color: $primary-color;
+      margin: 0 0 0.5rem;
+      font-size: 1.5em;
+    }
+
+    &__description {
+      color: $primary-color;
+      margin: 0.5rem 0;
+      font-size: 1em;
+    }
+
+    &__link {
+      color: $primary-color;
+      text-decoration: none;
+      margin-right: 1rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}

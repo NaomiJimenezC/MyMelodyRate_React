@@ -8,6 +8,7 @@ import {UserContext} from "../Context/UserProvider.jsx";
 import {FavoriteListContext} from "../Context/FavoriteListProvider.jsx";
 import {faHeart} from "@fortawesome/free-regular-svg-icons/faHeart";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import "../sass/components/_item_track.scss"
 import "../sass/components/_list_music.scss"
 
 
