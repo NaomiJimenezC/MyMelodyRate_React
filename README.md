@@ -1,5 +1,6 @@
-# MyMelodyRate_React
+# MyMelodyRate React
 
+https://mymelodyrate.netlify.app/
 
 # Segunda entrega
 
